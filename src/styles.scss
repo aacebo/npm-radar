@@ -29,3 +29,10 @@ body {
     @include nrr-theme($nrr-dark-theme);
   }
 }
+
+.nrr-screen {
+  flex: 1;
+  min-width: 1px;
+  background-color: var(--bg);
+  overflow-y: auto;
+}
