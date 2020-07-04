@@ -4,6 +4,7 @@
 @import './styles/utils';
 @import './styles/theming';
 @import './themes/light.theme';
+@import './themes/dark.theme';
 
 @include cdk-overlay();
 
@@ -22,5 +23,9 @@ body {
 
   &.nrr-light {
     @include nrr-theme($nrr-light-theme);
+  }
+
+  &.nrr-dark {
+    @include nrr-theme($nrr-dark-theme);
   }
 }
