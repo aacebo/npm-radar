@@ -7,6 +7,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { environment } from '../../environments/environment';
 
+import { RouterModule } from './router';
+
 @NgModule({
   imports: [
     HttpClientModule,
@@ -17,6 +19,8 @@ import { environment } from '../../environments/environment';
       maxAge: 10,
       logOnly: environment.production,
     }),
+
+    RouterModule,
   ],
 })
 export class ResourcesModule { }
