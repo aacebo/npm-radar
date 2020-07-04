@@ -1,1 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~@angular/cdk/overlay';
+
+@import './styles/utils';
+@import './styles/theming';
+@import './themes/light.theme';
+
+@include cdk-overlay();
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg);
+}
+
+body {
+  margin: 0;
+  font-size: 12pt;
+  font-family: "Roboto", "-apple-system", "BlinkMacSystemFont", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  &.nrr-light {
+    @include nrr-theme($nrr-light-theme);
+  }
+}

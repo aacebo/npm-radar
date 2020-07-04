@@ -6,9 +6,13 @@ import { environment } from './environments/environment';
 
 if (environment.production) {
   enableProdMode();
+
+  // enable google analytics
+  gtag('js', new Date());
+  gtag('config', 'UA-170324785-1');
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule, {
-  defaultEncapsulation: ViewEncapsulation.None
+  defaultEncapsulation: ViewEncapsulation.None,
 })
   .catch(err => console.error(err));

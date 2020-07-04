@@ -1,0 +1,165 @@
+@mixin nrr-arrow(
+  $nrr-arrow-color,
+  $nrr-arrow-border-color,
+  $nrr-arrow-width: 5px,
+  $nrr-arrow-border-width: 1px
+) {
+  position: relative;
+  background-color: $nrr-arrow-color;
+  border: $nrr-arrow-border-width solid $nrr-arrow-border-color;
+
+  &:before, &:after {
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+
+  &:before {
+    border-color: rgba(194, 225, 245, 0);
+    border-width: calc(#{$nrr-arrow-width} + #{$nrr-arrow-border-width} + 1px);
+  }
+
+  &:after {
+    border-color: rgba(136, 183, 213, 0);
+    border-width: $nrr-arrow-width;
+  }
+
+  &.top {
+    &:before, &:after {
+      top: 100%;
+      left: 50%;
+    }
+
+    &:before {
+      border-top-color: $nrr-arrow-border-color;
+      margin-left: calc((#{$nrr-arrow-width} + #{$nrr-arrow-border-width} + 1px) * -1);
+    }
+
+    &:after {
+      border-top-color: $nrr-arrow-color;
+      margin-left: calc(#{$nrr-arrow-width} * -1);
+    }
+  }
+
+  &.bottom {
+    &:before, &:after {
+      bottom: 100%;
+      left: 50%;
+    }
+
+    &:before {
+      border-bottom-color: $nrr-arrow-border-color;
+      margin-left: calc((#{$nrr-arrow-width} + #{$nrr-arrow-border-width} + 1px) * -1);
+    }
+
+    &:after {
+      border-bottom-color: $nrr-arrow-color;
+      margin-left: calc(#{$nrr-arrow-width} * -1);
+    }
+  }
+
+  &.left {
+    &:before, &:after {
+      left: 100%;
+      top: 50%;
+    }
+
+    &:before {
+      border-left-color: $nrr-arrow-border-color;
+      margin-top: calc((#{$nrr-arrow-width} + #{$nrr-arrow-border-width} + 1px) * -1);
+    }
+
+    &:after {
+      border-left-color: $nrr-arrow-color;
+      margin-top: calc(#{$nrr-arrow-width} * -1);
+    }
+  }
+
+  &.right {
+    &:before, &:after {
+      right: 100%;
+      top: 50%;
+    }
+
+    &:before {
+      border-right-color: $nrr-arrow-border-color;
+      margin-top: calc((#{$nrr-arrow-width} + #{$nrr-arrow-border-width} + 1px) * -1);
+    }
+
+    &:after {
+      border-right-color: $nrr-arrow-color;
+      margin-top: calc(#{$nrr-arrow-width} * -1);
+    }
+  }
+
+  &.bottom-left {
+    &:before, &:after {
+      bottom: 100%;
+      left: calc(100% - 14px);
+    }
+
+    &:before {
+      border-bottom-color: $nrr-arrow-border-color;
+      margin-left: calc((#{$nrr-arrow-width} + #{$nrr-arrow-border-width} + 1px) * -1);
+    }
+
+    &:after {
+      border-bottom-color: $nrr-arrow-color;
+      margin-left: calc(#{$nrr-arrow-width} * -1);
+    }
+  }
+
+  &.bottom-right {
+    &:before, &:after {
+      bottom: 100%;
+      left: 14px;
+    }
+
+    &:before {
+      border-bottom-color: $nrr-arrow-border-color;
+      margin-left: calc((#{$nrr-arrow-width} + #{$nrr-arrow-border-width} + 1px) * -1);
+    }
+
+    &:after {
+      border-bottom-color: $nrr-arrow-color;
+      margin-left: calc(#{$nrr-arrow-width} * -1);
+    }
+  }
+
+  &.top-left {
+    &:before, &:after {
+      top: 100%;
+      left: calc(100% - 14px);
+    }
+
+    &:before {
+      border-top-color: $nrr-arrow-border-color;
+      margin-left: calc((#{$nrr-arrow-width} + #{$nrr-arrow-border-width} + 1px) * -1);
+    }
+
+    &:after {
+      border-top-color: $nrr-arrow-color;
+      margin-left: calc(#{$nrr-arrow-width} * -1);
+    }
+  }
+
+  &.top-right {
+    &:before, &:after {
+      top: 100%;
+      left: 14px;
+    }
+
+    &:before {
+      border-top-color: $nrr-arrow-border-color;
+      margin-left: calc((#{$nrr-arrow-width} + #{$nrr-arrow-border-width} + 1px) * -1);
+    }
+
+    &:after {
+      border-top-color: $nrr-arrow-color;
+      margin-left: calc(#{$nrr-arrow-width} * -1);
+    }
+  }
+}

@@ -1,0 +1,20 @@
+@import './animations';
+
+$nrr-backdrop-index: 2;
+$nrr-backdrop-bg-color: rgba(0, 0, 0, 0.8);
+
+.nrr-backdrop {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  pointer-events: none;
+  z-index: $nrr-backdrop-index;
+  background-color: $nrr-backdrop-bg-color;
+  transition: opacity $nrr-animation-duration $nrr-animation-timing-function;
+
+  &.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+}

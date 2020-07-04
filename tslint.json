@@ -9,24 +9,26 @@
     },
     "array-type": false,
     "arrow-return-shorthand": true,
-    "curly": true,
+    "curly": false,
     "deprecation": {
       "severity": "warning"
     },
     "component-class-suffix": true,
     "contextual-lifecycle": true,
-    "directive-class-suffix": true,
+    "directive-class-suffix": false,
     "directive-selector": [
       true,
       "attribute",
-      "nrr",
-      "camelCase"
+      "luc",
+      "camelCase",
+      "kebab-case"
     ],
     "component-selector": [
       true,
       "element",
-      "nrr",
-      "kebab-case"
+      "luc",
+      "kebab-case",
+      "camelCase"
     ],
     "eofline": true,
     "import-blacklist": [
@@ -94,10 +96,6 @@
         "named": "never"
       }
     },
-    "typedef": [
-      true,
-      "call-signature"
-    ],
     "typedef-whitespace": {
       "options": [
         {
@@ -120,6 +118,7 @@
       "options": [
         "ban-keywords",
         "check-format",
+        "allow-leading-underscore",
         "allow-pascal-case"
       ]
     },
@@ -134,8 +133,8 @@
       ]
     },
     "no-conflicting-lifecycle": true,
-    "no-host-metadata-property": true,
-    "no-input-rename": true,
+    "no-host-metadata-property": false,
+    "no-input-rename": false,
     "no-inputs-metadata-property": true,
     "no-output-native": true,
     "no-output-on-prefix": true,
@@ -144,7 +143,11 @@
     "template-banana-in-box": true,
     "template-no-negated-async": true,
     "use-lifecycle-interface": true,
-    "use-pipe-transform-interface": true
+    "use-pipe-transform-interface": true,
+    "trailing-comma": [true, {"multiline": "always", "singleline": "never"}],
+    "interface-name": [true, "always-prefix"],
+    "prefer-readonly": true,
+    "forin": false
   },
   "rulesDirectory": [
     "codelyzer"
