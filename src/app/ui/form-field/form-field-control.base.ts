@@ -47,6 +47,13 @@ export class FormFieldControlBase<T> implements ControlValueAccessor, OnInit {
   }
   protected _autocomplete = false;
 
+  @Input()
+  get spellcheck() { return this._spellcheck; }
+  set spellcheck(v) {
+    this._spellcheck = coerceBooleanProperty(v);
+  }
+  protected _spellcheck = false;
+
   get value() { return this._value; }
   set value(v) {
     if (v !== this._value) {

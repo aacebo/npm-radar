@@ -3,11 +3,13 @@
 .nrr-search-item {
   display: flex;
   color: var(--text);
+  padding: 5px;
 
   .nrr-search-item--header {
     display: flex;
     flex-direction: column;
     flex: 1;
+    margin-right: 5px;
 
     @include nrr-ellipsis;
 
@@ -19,11 +21,14 @@
     }
 
     .nrr-search-item--description {
+      font-size: 10pt;
+
       @include nrr-ellipsis;
     }
   }
 
   .nrr-search-item--version {
-    margin: auto;
+    margin: auto auto 0 auto;
+    font-size: 10pt;
   }
 }

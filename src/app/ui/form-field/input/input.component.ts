@@ -13,6 +13,7 @@ import { FormFieldControlBase } from '../form-field-control.base';
     '[required]': 'required',
     '[autofocus]': 'autofocus',
     '[autocomplete]': 'autocomplete',
+    '[spellcheck]': 'spellcheck',
     '(input)': 'onInput()',
   },
   encapsulation: ViewEncapsulation.None,
