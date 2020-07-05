@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { SearchAutocompleteModule } from '../../features/search-autocomplete';
+
 import { SearchComponent } from './search.component';
 import { SearchRoutingModule } from './search-routing.module';
 
@@ -9,6 +11,7 @@ import { SearchRoutingModule } from './search-routing.module';
   imports: [
     CommonModule,
     SearchRoutingModule,
+    SearchAutocompleteModule,
   ],
 })
 export class SearchModule { }

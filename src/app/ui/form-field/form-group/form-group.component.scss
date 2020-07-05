@@ -1,0 +1,21 @@
+.nrr-form-group {
+  display: flex;
+  min-height: 1px;
+  min-width: 1px;
+
+  &.row {
+    flex-direction: row;
+  }
+
+  &.column {
+    flex-direction: column;
+  }
+
+  .nrr-form-field {
+    flex: 1;
+
+    &:not(:last-child) {
+      margin-right: 5px;
+    }
+  }
+}

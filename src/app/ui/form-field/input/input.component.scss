@@ -1,0 +1,45 @@
+@import '../../../../styles/animations';
+@import '../../../../styles/border-radius';
+
+$nrr-input-border-size: 2.5px;
+
+.nrr-input {
+  outline: none;
+  border: 0px;
+  padding: 15px;
+  border-radius: $nrr-border-radius-md;
+  background-color: var(--bg-dark);
+  font: inherit;
+  font-size: 11pt;
+  resize: none;
+  color: var(--text-light);
+  caret-color: var(--primary);
+  transition: all $nrr-animation-duration $nrr-animation-timing-function;
+
+  &:focus {
+    box-shadow: inset 0 0 0 $nrr-input-border-size var(--primary);
+
+    &.ng-invalid {
+      &.ng-dirty {
+        box-shadow: inset 0 0 0 $nrr-input-border-size var(--danger);
+      }
+    }
+  }
+
+  &:hover {
+    background-color: var(--primary-a30);
+  }
+
+  &.ng-valid {
+    &.ng-dirty {
+      background-color: var(--primary-a30);
+    }
+  }
+
+  &.ng-invalid {
+    &.ng-dirty {
+      caret-color: var(--danger);
+      background-color: var(--danger-a30);
+    }
+  }
+}

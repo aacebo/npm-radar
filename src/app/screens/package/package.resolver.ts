@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 
-import { PackageService, INpmPackage } from '../../resources/package';
+import { PackageService } from '../../resources/package';
 
 @Injectable()
-export class PackageResolver implements Resolve<INpmPackage> {
+export class PackageResolver implements Resolve<void> {
   constructor(private readonly _packageService: PackageService) { }
 
   resolve(route: ActivatedRouteSnapshot) {
     const name = route.paramMap.get('name');
     this._packageService.findOne(name);
-    return this._packageService.package$;
+    // return this._packageService.package$;
   }
 }

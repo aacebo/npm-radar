@@ -1,0 +1,44 @@
+@import '../../../styles/border-radius';
+
+.nrr-form-field {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-width: 1px;
+  border-radius: $nrr-border-radius-sm;
+  padding-bottom: 16px;
+
+  &.invalid {
+    .nrr-label {
+      color: var(--danger);
+    }
+
+    .nrr-prefix,
+    .nrr-suffix {
+      color: var(--danger);
+    }
+  }
+
+  .nrr-prefix,
+  .nrr-suffix {
+    position: absolute;
+    height: 45px;
+    width: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .nrr-prefix {
+    left: 10px;
+  }
+
+  .nrr-suffix {
+    right: 10px;
+  }
+
+  .nrr-error {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+}

@@ -1,0 +1,8 @@
+<ng-content select="nrr-label"></ng-content>
+<ng-content select="input[nrr-input]"></ng-content>
+<ng-content select="[lucPrefix]"></ng-content>
+<ng-content select="[lucSuffix]"></ng-content>
+
+<nrr-error *ngIf="errors?.length">
+  {{ errors[0] }}
+</nrr-error>
