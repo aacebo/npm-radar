@@ -1,3 +1,9 @@
 .nrr-search {
   display: flex;
+
+  .nrr-search-autocomplete {
+    margin: auto;
+    width: 80%;
+    max-width: 500px;
+  }
 }

@@ -62,13 +62,13 @@ export class FormFieldControlBase<T> implements ControlValueAccessor, OnInit {
   constructor(
     readonly el: ElementRef<HTMLElement>,
     readonly cdr: ChangeDetectorRef,
-    @Optional() readonly lucFormField: FormFieldComponent,
+    @Optional() readonly nrrFormField: FormFieldComponent,
     @Optional() readonly formGroup: FormGroupDirective,
     @Optional() readonly formControlName: FormControlName,
   ) { }
 
   ngOnInit() {
-    this.lucFormField.formControlName = this.formControlName;
+    this.nrrFormField.formControlName = this.formControlName;
   }
 
   writeValue(v: T) {

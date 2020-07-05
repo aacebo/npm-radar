@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { FormFieldModule } from '../../ui/form-field';
+import { IconModule } from '../../ui/icon';
 
 import { SearchAutocompleteComponent } from './search-autocomplete.component';
 
@@ -11,6 +12,7 @@ import { SearchAutocompleteComponent } from './search-autocomplete.component';
   imports: [
     CommonModule,
     FormFieldModule,
+    IconModule,
   ],
 })
 export class SearchAutocompleteModule { }
