@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { IconModule } from '../../ui/icon';
+
 import { PackageComponent } from './package.component';
 import { PackageRoutingModule } from './package-routing.module';
 
@@ -9,6 +11,7 @@ import { PackageRoutingModule } from './package-routing.module';
   imports: [
     CommonModule,
     PackageRoutingModule,
+    IconModule,
   ],
 })
 export class PackageModule { }

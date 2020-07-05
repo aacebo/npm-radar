@@ -7,7 +7,7 @@ const routes: Routes = [
     loadChildren: () => import('./screens/search/search.module').then(m => m.SearchModule),
   },
   {
-    path: 'package',
+    path: ':name',
     loadChildren: () => import('./screens/package/package.module').then(m => m.PackageModule),
   },
   {

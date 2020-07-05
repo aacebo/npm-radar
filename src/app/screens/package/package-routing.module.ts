@@ -6,13 +6,9 @@ import { PackageResolver } from './package.resolver';
 
 const routes: Routes = [
   {
-    path: ':name',
+    path: '',
     resolve: { package: PackageResolver },
     component: PackageComponent,
-  },
-  {
-    path: '**',
-    redirectTo: '/',
   },
 ];
 

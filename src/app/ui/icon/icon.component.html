@@ -1,0 +1,16 @@
+<svg
+  *ngIf="icon"
+  class="feather"
+  [ngClass]="'feather-' + name"
+  [innerHTML]="icon.contents | safe: 'html'"
+  fill="none"
+  [attr.height]="height"
+  [attr.width]="width"
+  [attr.stroke]="stroke"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  [attr.stroke-width]="strokeWidth"
+  viewBox="0 0 24 24"
+  xmlns="http://www.w3.org/2000/svg"
+>
+</svg>
