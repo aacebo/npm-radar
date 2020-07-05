@@ -5,6 +5,10 @@ import { IEnvironment } from './environment.interface';
 
 export const environment: IEnvironment = {
   production: false,
+  api: {
+    pkg: 'http://localhost:4200/api',
+    search: 'https://www.npmjs.com/search',
+  },
 };
 
 /*

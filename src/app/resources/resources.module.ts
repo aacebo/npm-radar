@@ -8,6 +8,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../../environments/environment';
 
 import { RouterModule } from './router';
+import { PackageModule } from './package';
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import { RouterModule } from './router';
     }),
 
     RouterModule,
+    PackageModule,
   ],
 })
 export class ResourcesModule { }

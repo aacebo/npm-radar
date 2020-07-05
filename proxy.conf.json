@@ -1,0 +1,10 @@
+{
+  "/api/*": {
+    "target": "http://registry.npmjs.org",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  }
+}
