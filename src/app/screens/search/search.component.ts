@@ -1,5 +1,7 @@
 import { Component, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
 
+import { SearchService } from '../../resources/search';
+
 @Component({
   selector: 'nrr-search',
   templateUrl: './search.component.html',
@@ -8,4 +10,10 @@ import { Component, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchComponent { }
+export class SearchComponent {
+  constructor(private readonly _searchService: SearchService) { }
+
+  onSearchChange(e: string) {
+    this._searchService.find(e);
+  }
+}

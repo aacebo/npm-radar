@@ -16,7 +16,6 @@ export class SearchAutocompleteComponent implements OnInit, OnDestroy {
   get value() { return this._value; }
   set value(v) {
     this._value = v;
-    this.control.setValue(v);
     this.valueChange.emit(v);
   }
   private _value?: string;
@@ -32,7 +31,7 @@ export class SearchAutocompleteComponent implements OnInit, OnDestroy {
       distinctUntilChanged(),
       debounceTime(500),
       takeUntil(this._destroy$),
-    ).subscribe(v => console.log(v));
+    ).subscribe(v => this.value = v);
   }
 
   ngOnDestroy() {

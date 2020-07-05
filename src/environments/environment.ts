@@ -7,7 +7,7 @@ export const environment: IEnvironment = {
   production: false,
   api: {
     pkg: 'http://localhost:4200/api',
-    search: 'https://www.npmjs.com/search',
+    search: 'http://localhost:4200/searchapi',
   },
 };
 

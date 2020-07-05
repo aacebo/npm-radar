@@ -9,6 +9,7 @@ import { environment } from '../../environments/environment';
 
 import { RouterModule } from './router';
 import { PackageModule } from './package';
+import { SearchModule } from './search';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { PackageModule } from './package';
 
     RouterModule,
     PackageModule,
+    SearchModule,
   ],
 })
 export class ResourcesModule { }

@@ -1,10 +1,18 @@
 {
   "/api/*": {
-    "target": "http://registry.npmjs.org",
-    "secure": false,
+    "target": "https://registry.npmjs.org",
+    "secure": true,
     "changeOrigin": true,
     "pathRewrite": {
       "^/api": ""
+    }
+  },
+  "/searchapi/*": {
+    "target": "https://www.npmjs.com",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/searchapi": "search"
     }
   }
 }
