@@ -25,6 +25,7 @@
     "@ngrx/router-store": "^9.2.0",
     "@ngrx/store": "^9.2.0",
     "@ngrx/store-devtools": "^9.2.0",
+    "feather-icons": "^4.28.0",
     "qs": "^6.9.4",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",

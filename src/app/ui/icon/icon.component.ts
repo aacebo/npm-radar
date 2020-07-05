@@ -2,10 +2,10 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@a
 import { coerceNumberProperty } from '@angular/cdk/coercion';
 
 @Component({
-  selector: 'luc-icon',
+  selector: 'nrr-icon',
   templateUrl: './icon.component.html',
   styleUrls: ['./icon.component.scss'],
-  host: { class: 'luc-icon' },
+  host: { class: 'nrr-icon' },
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

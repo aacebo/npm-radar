@@ -54,7 +54,12 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/feather-icons/dist/feather.min.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "qs"
+            ]
           },
           "configurations": {
             "production": {
