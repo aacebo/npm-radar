@@ -11,9 +11,5 @@ import { SearchService } from '../../resources/search';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchComponent {
-  constructor(private readonly _searchService: SearchService) { }
-
-  onSearchChange(e: string) {
-    this._searchService.find(e);
-  }
+  constructor(readonly searchService: SearchService) { }
 }

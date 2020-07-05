@@ -1,3 +1,5 @@
 <nrr-search-autocomplete
-  (valueChange)="onSearchChange($event)"
+  [value]="searchService.text$ | async"
+  [results]="searchService.entities$ | async"
+  (valueChange)="searchService.find($event)"
 ></nrr-search-autocomplete>

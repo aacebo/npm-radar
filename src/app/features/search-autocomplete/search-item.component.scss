@@ -1,0 +1,29 @@
+@import '../../../styles/utils';
+
+.nrr-search-item {
+  display: flex;
+  color: var(--text);
+
+  .nrr-search-item--header {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    @include nrr-ellipsis;
+
+    .nrr-search-item--name {
+      color: var(--text-light);
+      font-weight: 500;
+
+      @include nrr-ellipsis;
+    }
+
+    .nrr-search-item--description {
+      @include nrr-ellipsis;
+    }
+  }
+
+  .nrr-search-item--version {
+    margin: auto;
+  }
+}

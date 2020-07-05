@@ -3,6 +3,8 @@ import { FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { startWith, debounceTime, takeUntil, distinctUntilChanged } from 'rxjs/operators';
 
+import { INpmSearchPackage } from '../../resources/search';
+
 @Component({
   selector: 'nrr-search-autocomplete',
   templateUrl: './search-autocomplete.component.html',
@@ -12,13 +14,8 @@ import { startWith, debounceTime, takeUntil, distinctUntilChanged } from 'rxjs/o
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchAutocompleteComponent implements OnInit, OnDestroy {
-  @Input()
-  get value() { return this._value; }
-  set value(v) {
-    this._value = v;
-    this.valueChange.emit(v);
-  }
-  private _value?: string;
+  @Input() value?: string;
+  @Input() results: INpmSearchPackage[] = [];
 
   @Output() valueChange = new EventEmitter<string>();
 
@@ -26,12 +23,13 @@ export class SearchAutocompleteComponent implements OnInit, OnDestroy {
   private readonly _destroy$ = new Subject<void>();
 
   ngOnInit() {
+    this.control.setValue(this.value);
     this.control.valueChanges.pipe(
       startWith(''),
       distinctUntilChanged(),
       debounceTime(500),
       takeUntil(this._destroy$),
-    ).subscribe(v => this.value = v);
+    ).subscribe(v => this.valueChange.emit(v));
   }
 
   ngOnDestroy() {

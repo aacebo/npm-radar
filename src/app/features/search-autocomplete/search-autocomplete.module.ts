@@ -6,9 +6,10 @@ import { FormFieldModule } from '../../ui/form-field';
 import { IconModule } from '../../ui/icon';
 
 import { SearchAutocompleteComponent } from './search-autocomplete.component';
+import { SearchItemComponent } from './search-item.component';
 
 @NgModule({
-  declarations: [SearchAutocompleteComponent],
+  declarations: [SearchAutocompleteComponent, SearchItemComponent],
   exports: [SearchAutocompleteComponent],
   imports: [
     CommonModule,

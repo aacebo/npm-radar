@@ -11,3 +11,13 @@
     stroke="var(--text-light)"
   ></nrr-icon>
 </nrr-form-field>
+
+<div
+  *ngIf="results.length"
+  class="nrr-search-autocomplete--results"
+>
+  <nrr-search-item
+    *ngFor="let package of results"
+    [package]="package"
+  ></nrr-search-item>
+</div>
