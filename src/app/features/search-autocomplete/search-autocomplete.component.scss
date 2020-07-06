@@ -10,5 +10,9 @@
 
   .nrr-search-autocomplete--results {
     overflow-y: auto;
+
+    .nrr-search-autocomplete--result-link {
+      text-decoration: none;
+    }
   }
 }

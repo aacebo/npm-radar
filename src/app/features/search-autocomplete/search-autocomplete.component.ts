@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation, ChangeDetectionStrategy, OnInit, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { startWith, debounceTime, takeUntil, distinctUntilChanged } from 'rxjs/operators';
+import { startWith, debounceTime, takeUntil, distinctUntilChanged, skip } from 'rxjs/operators';
 
 import { INpmSearchPackage } from '../../resources/search';
 
@@ -27,6 +27,7 @@ export class SearchAutocompleteComponent implements OnInit, OnDestroy {
     this.control.valueChanges.pipe(
       startWith(''),
       distinctUntilChanged(),
+      skip(1),
       debounceTime(500),
       takeUntil(this._destroy$),
     ).subscribe(v => this.valueChange.emit(v));

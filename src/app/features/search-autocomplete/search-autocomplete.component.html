@@ -16,8 +16,10 @@
   *ngIf="results.length"
   class="nrr-search-autocomplete--results"
 >
-  <nrr-search-item
+  <a
+    class="nrr-search-autocomplete--result-link"
     *ngFor="let package of results"
-    [package]="package"
-  ></nrr-search-item>
+    [routerLink]="['/', package.name]">
+    <nrr-search-item [package]="package"></nrr-search-item>
+  </a>
 </div>
