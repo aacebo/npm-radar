@@ -23,7 +23,7 @@ export class SearchAutocompleteComponent implements OnInit, OnDestroy {
   private readonly _destroy$ = new Subject<void>();
 
   ngOnInit() {
-    this.control.setValue(this.value);
+    this.control.setValue(this.value || '');
     this.control.valueChanges.pipe(
       startWith(''),
       distinctUntilChanged(),

@@ -1,0 +1,21 @@
+@import '../../../styles/animations';
+
+@import './progress';
+
+.nrr-progress-bar {
+  display: flex;
+
+  @include nrr-bar-color(primary);
+  @include nrr-bar-color(warn);
+  @include nrr-bar-color(danger);
+
+  &.indeterminate {
+    .nrr-progress-bar-foreground {
+      @include nrr-bar-indeterminate();
+    }
+  }
+
+  .nrr-progress-bar-foreground {
+    transition: all $nrr-animation-duration $nrr-animation-timing-function;
+  }
+}

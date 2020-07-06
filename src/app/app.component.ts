@@ -1,5 +1,7 @@
 import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 
+import { ProgressService } from './ui/progress';
+
 @Component({
   selector: 'nrr-root',
   templateUrl: './app.component.html',
@@ -8,4 +10,6 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent { }
+export class AppComponent {
+  constructor(readonly progressService: ProgressService) { }
+}

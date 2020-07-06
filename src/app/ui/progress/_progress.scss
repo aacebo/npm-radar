@@ -1,0 +1,26 @@
+@keyframes nrr-bar-slide {
+  0% {
+    transform: translateX(0%) scaleX(0.5);
+  }
+  20% {
+    transform: translateX(20%) scaleX(2);
+  }
+  80% {
+    transform: translateX(80%) scaleX(0.5)
+  }
+  100% {
+    transform: translateX(100%) scaleX(0);
+  }
+}
+
+@mixin nrr-bar-indeterminate() {
+  animation: nrr-bar-slide 1s linear infinite;
+}
+
+@mixin nrr-bar-color($color) {
+  &.#{ $color } {
+    .nrr-progress-bar-foreground {
+      fill: var(--#{ $color }-light);
+    }
+  }
+}
