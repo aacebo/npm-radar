@@ -1,4 +1,14 @@
-import { Component, ChangeDetectionStrategy, Inject, forwardRef, ViewEncapsulation, ElementRef, AfterContentInit } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  Inject,
+  forwardRef,
+  ViewEncapsulation,
+  ElementRef,
+  AfterContentInit,
+  HostListener,
+  ChangeDetectorRef,
+} from '@angular/core';
 
 import { SidenavContainerComponent } from '../sidenav-container/sidenav-container.component';
 import { SidenavPosition } from '../enums/sidenav-position.enum';
@@ -45,15 +55,30 @@ export class SidenavContentComponent implements AfterContentInit {
     return this._container.sidenav.el.nativeElement.clientWidth;
   }
 
+  private _timer: NodeJS.Timer;
+
   constructor(
     @Inject(forwardRef(() => SidenavContainerComponent))
     private readonly _container: SidenavContainerComponent,
     private readonly _el: ElementRef<HTMLElement>,
+    private readonly _cdr: ChangeDetectorRef,
   ) { }
 
   ngAfterContentInit() {
     setTimeout(() => {
       this._el.nativeElement.style.transition = 'all 0.2s ease-in-out';
     }, 1000);
+  }
+
+  @HostListener('window:resize')
+  onWindowResize() {
+    if (this._timer) {
+      clearTimeout(this._timer);
+      this._timer = undefined;
+    }
+
+    this._timer = setTimeout(() => {
+      this._cdr.markForCheck();
+    }, 200);
   }
 }

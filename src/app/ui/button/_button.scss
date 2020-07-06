@@ -1,0 +1,42 @@
+@import '../../../styles/box-shadow';
+
+$nrr-button-padding: 12px 24px;
+
+@mixin nrr-button($color) {
+  &.#{$color} {
+    background-color: var(--#{$color});
+    color: var(--text-light);
+
+    &:not(:disabled) {
+      &:hover {
+        background-color: var(--#{$color}-dark);
+      }
+    }
+
+    &:focus {
+      box-shadow: inset 0 0 0 2px var(--#{$color}-l15), $nrr-shadow-2dp;
+
+      &:active {
+        box-shadow: inset 0 0 0 2px var(--#{$color}-l15), $nrr-shadow-8dp
+      }
+    }
+  }
+}
+
+@mixin nrr-link-button($color) {
+  &.#{$color} {
+    color: var(--#{$color});
+  }
+}
+
+@mixin nrr-list-button($color) {
+  &.#{$color} {
+    &.active {
+      background-color: var(--#{$color}-a30);
+
+      &:hover {
+        background-color: var(--#{$color}-a15);
+      }
+    }
+  }
+}

@@ -10,5 +10,21 @@
       max-width: 300px;
       padding: 5px;
     }
+
+    .nrr-sidenav-content {
+      .menu-toggle {
+        position: absolute;
+        top: 12px;
+        left: 10px;
+
+        &:hover {
+          .nrr-icon {
+            svg {
+              stroke: var(--text-light) !important;
+            }
+          }
+        }
+      }
+    }
   }
 }

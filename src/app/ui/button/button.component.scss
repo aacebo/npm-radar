@@ -1,0 +1,99 @@
+@import '../../../styles/border-radius';
+@import '../../../styles/box-shadow';
+
+@import './button';
+
+:host {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  padding: $nrr-button-padding;
+  border-radius: $nrr-border-radius-md;
+  transition: all 0.15s linear;
+  font: inherit;
+  font-weight: bold;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  &.nrr-button {
+    background-color: var(--bg-light);
+    box-shadow: $nrr-shadow-2dp;
+
+    &:active {
+      box-shadow: $nrr-shadow-8dp;
+    }
+
+    &:disabled {
+      opacity: 0.3;
+    }
+
+    @include nrr-button(primary);
+    @include nrr-button(warn);
+    @include nrr-button(danger);
+  }
+
+  &.nrr-icon-button {
+    display: flex;
+    padding: 5px;
+    margin: auto 0;
+  }
+
+  &.nrr-link-button {
+    text-decoration: none;
+    color: var(--text-dark);
+
+    &:active {
+      opacity: 0.5;
+    }
+
+    &:hover {
+      opacity: 0.5;
+    }
+
+    &:focus {
+      text-decoration-line: underline;
+    }
+
+    @include nrr-link-button(primary);
+    @include nrr-link-button(warn);
+    @include nrr-link-button(danger);
+  }
+
+  &.nrr-list-button {
+    display: flex;
+    text-decoration: none;
+    color: var(--text-dark);
+    text-align: left;
+    border-radius: 0;
+    font-weight: 500;
+    width: 100%;
+    align-items: center;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    &.active {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    ::ng-deep .nrr-icon {
+      &:first-child {
+        margin-right: 5px;
+      }
+
+      &:last-child {
+        margin-left: 5px;
+      }
+    }
+
+    @include nrr-list-button(primary);
+    @include nrr-list-button(warn);
+    @include nrr-list-button(danger);
+  }
+}

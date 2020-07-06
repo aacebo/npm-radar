@@ -10,7 +10,7 @@ import { coerceNumberProperty } from '@angular/cdk/coercion';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IconComponent {
-  @Input() stroke = 'currentColor';
+  @Input() stroke = 'var(--text)';
 
   @Input()
   get name() { return this._name; }

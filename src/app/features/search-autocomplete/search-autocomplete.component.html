@@ -19,7 +19,8 @@
   <a
     class="nrr-search-autocomplete--result-link"
     *ngFor="let package of results"
-    [routerLink]="['/', package.name]">
+    [routerLink]="['/', package.name]"
+  >
     <nrr-search-item [package]="package"></nrr-search-item>
   </a>
 </div>

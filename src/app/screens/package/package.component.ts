@@ -1,4 +1,5 @@
-import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ViewEncapsulation, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { SearchService } from '../../resources/search';
 
@@ -10,6 +11,15 @@ import { SearchService } from '../../resources/search';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PackageComponent {
-  constructor(readonly searchService: SearchService) { }
+export class PackageComponent implements OnInit {
+  menu = false;
+
+  constructor(
+    readonly searchService: SearchService,
+    private readonly _route: ActivatedRoute,
+  ) { }
+
+  ngOnInit() {
+    this.menu = this._route.snapshot.queryParamMap.has('q');
+  }
 }

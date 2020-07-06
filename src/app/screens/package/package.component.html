@@ -1,5 +1,5 @@
 <nrr-sidenav-container>
-  <nrr-sidenav open>
+  <nrr-sidenav [(open)]="menu">
     <ng-template nrrSidenavBody>
       <nrr-search-autocomplete
         [value]="searchService.text$ | async"
@@ -10,6 +10,12 @@
   </nrr-sidenav>
 
   <nrr-sidenav-content>
-    <p>test</p>
+    <button
+      class="menu-toggle"
+      nrr-icon-button
+      (click)="menu = !menu"
+    >
+      <nrr-icon name="menu"></nrr-icon>
+    </button>
   </nrr-sidenav-content>
 </nrr-sidenav-container>
