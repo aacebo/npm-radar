@@ -6,6 +6,7 @@ import { ButtonModule } from '../../ui/button';
 import { SidenavModule } from '../../ui/sidenav';
 
 import { SearchAutocompleteModule } from '../../features/search-autocomplete';
+import { GraphModule } from '../../features/graph';
 
 import { PackageComponent } from './package.component';
 import { PackageRoutingModule } from './package-routing.module';
@@ -17,6 +18,8 @@ import { PackageRoutingModule } from './package-routing.module';
     PackageRoutingModule,
 
     SearchAutocompleteModule,
+    GraphModule,
+
     IconModule,
     ButtonModule,
     SidenavModule,

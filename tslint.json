@@ -147,7 +147,8 @@
     "trailing-comma": [true, {"multiline": "always", "singleline": "never"}],
     "interface-name": [true, "always-prefix"],
     "prefer-readonly": true,
-    "forin": false
+    "forin": false,
+    "no-string-literal": false
   },
   "rulesDirectory": [
     "codelyzer"

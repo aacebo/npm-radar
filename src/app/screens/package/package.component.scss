@@ -12,10 +12,13 @@
     }
 
     .nrr-sidenav-content {
+      display: flex;
+
       .menu-toggle {
         position: absolute;
         top: 12px;
         left: 10px;
+        z-index: 3;
 
         &:hover {
           .nrr-icon {

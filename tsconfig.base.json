@@ -12,6 +12,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "importHelpers": true,
+    "allowSyntheticDefaultImports": true,
     "target": "es2015",
     "module": "es2020",
     "lib": [
