@@ -1,5 +1,7 @@
 import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 
+import { SearchService } from '../../resources/search';
+
 @Component({
   selector: 'nrr-package',
   templateUrl: './package.component.html',
@@ -8,4 +10,6 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PackageComponent { }
+export class PackageComponent {
+  constructor(readonly searchService: SearchService) { }
+}

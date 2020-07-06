@@ -1,0 +1,15 @@
+<nrr-sidenav-container>
+  <nrr-sidenav open>
+    <ng-template nrrSidenavBody>
+      <nrr-search-autocomplete
+        [value]="searchService.text$ | async"
+        [results]="searchService.entities$ | async"
+        (valueChange)="searchService.find($event)"
+      ></nrr-search-autocomplete>
+    </ng-template>
+  </nrr-sidenav>
+
+  <nrr-sidenav-content>
+    <p>test</p>
+  </nrr-sidenav-content>
+</nrr-sidenav-container>

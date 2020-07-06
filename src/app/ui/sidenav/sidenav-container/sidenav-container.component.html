@@ -1,0 +1,8 @@
+<div class="nrr-backdrop"
+     *ngIf="hasBackdrop"
+     [class.visible]="showBackdrop"
+     (click)="onBackdropClick()">
+</div>
+
+<ng-content select="nrr-sidenav"></ng-content>
+<ng-content select="nrr-sidenav-content"></ng-content>

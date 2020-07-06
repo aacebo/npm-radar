@@ -1,3 +1,14 @@
 .nrr-package {
   display: flex;
+  flex-direction: column;
+
+  .nrr-sidenav-container {
+    flex: 1;
+
+    .nrr-sidenav {
+      width: 35%;
+      max-width: 300px;
+      padding: 5px;
+    }
+  }
 }
