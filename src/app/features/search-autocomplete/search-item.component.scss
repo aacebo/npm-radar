@@ -6,10 +6,6 @@
   padding: 5px;
   cursor: pointer;
 
-  &:not(:last-child) {
-    border-bottom: 1px solid var(--hairline-strong-a15);
-  }
-
   &:hover {
     .nrr-search-item--name {
       text-decoration: underline;

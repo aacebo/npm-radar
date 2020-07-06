@@ -12,7 +12,12 @@
     overflow-y: auto;
 
     .nrr-search-autocomplete--result-link {
+      display: block;
       text-decoration: none;
+
+      &:not(:last-child) {
+        border-bottom: 1px solid var(--hairline-strong-a15);
+      }
     }
   }
 }
