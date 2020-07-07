@@ -59,7 +59,9 @@
             ],
             "allowedCommonJsDependencies": [
               "cytoscape",
-              "heap"
+              "cytoscape-fcose",
+              "heap",
+              "cose-base"
             ]
           },
           "configurations": {

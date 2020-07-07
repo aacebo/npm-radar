@@ -18,6 +18,6 @@
       <nrr-icon name="menu"></nrr-icon>
     </button>
 
-    <nrr-graph></nrr-graph>
+    <nrr-graph [elements]="packageService.dependencies$ | async"></nrr-graph>
   </nrr-sidenav-content>
 </nrr-sidenav-container>

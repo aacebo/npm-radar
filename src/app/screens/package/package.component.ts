@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { take } from 'rxjs/operators';
 
 import { SearchService } from '../../resources/search';
+import { PackageService } from '../../resources/package';
 
 @Component({
   selector: 'nrr-package',
@@ -18,6 +19,7 @@ export class PackageComponent implements OnInit {
 
   constructor(
     readonly searchService: SearchService,
+    readonly packageService: PackageService,
     private readonly _route: ActivatedRoute,
     private readonly _location: Location,
   ) { }

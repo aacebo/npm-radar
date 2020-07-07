@@ -1,31 +1,48 @@
-import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy, ElementRef, Input } from '@angular/core';
-import * as cytoscape from 'cytoscape';
+import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy, ElementRef, Input, OnDestroy } from '@angular/core';
+import cytoscape from 'cytoscape';
+
+import { GRAPH_LAYOUT } from './graph-layout.constant';
+import { GRAPH_STYLE } from './graph-style.constant';
 
 @Component({
   selector: 'nrr-graph',
-  templateUrl: './graph.component.html',
+  template: ``,
   styleUrls: ['./graph.component.scss'],
   host: { class: 'nrr-graph' },
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GraphComponent implements OnInit {
+export class GraphComponent implements OnInit, OnDestroy {
   @Input()
   get elements() { return this._elements; }
   set elements(v) {
     this._elements = v;
-    this.graph.add(v);
+
+    if (this._graph) {
+      this._graph.elements().remove();
+
+      if (v?.length) {
+        this._graph.add(v);
+        this._graph.layout(GRAPH_LAYOUT).run();
+        this._graph.center();
+      }
+    }
   }
   private _elements: cytoscape.ElementDefinition[] = [];
 
-  graph: cytoscape.Core;
+  private _graph: cytoscape.Core;
 
   constructor(private readonly _el: ElementRef<HTMLElement>) { }
 
   ngOnInit() {
-    this.graph = cytoscape({
+    this._graph = cytoscape({
       container: this._el.nativeElement,
-      elements: this.elements,
+      style: GRAPH_STYLE,
+      maxZoom: 0.6,
     });
+  }
+
+  ngOnDestroy() {
+    this._graph.destroy();
   }
 }
