@@ -1,5 +1,8 @@
 <nrr-sidenav-container>
-  <nrr-sidenav [(open)]="menu">
+  <nrr-sidenav
+    [(open)]="menu"
+    (stateChange)="onSidenavStateChange($event)"
+  >
     <ng-template nrrSidenavBody>
       <nrr-search-autocomplete
         [value]="searchService.text$ | async"
@@ -11,13 +14,24 @@
 
   <nrr-sidenav-content>
     <button
-      class="menu-toggle"
+      class="menu-btn"
       nrr-icon-button
       (click)="toggle()"
     >
       <nrr-icon name="menu"></nrr-icon>
     </button>
 
-    <nrr-graph [elements]="packageService.dependencies$ | async"></nrr-graph>
+    <button
+      class="center-btn"
+      nrr-icon-button
+      (click)="center()"
+    >
+      <nrr-icon name="crosshair"></nrr-icon>
+    </button>
+
+    <nrr-graph
+      [elements]="packageService.dependencies$ | async"
+      (nodeSelect)="onNodeSelect($event)"
+    ></nrr-graph>
   </nrr-sidenav-content>
 </nrr-sidenav-container>

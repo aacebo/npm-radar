@@ -12,3 +12,4 @@ declare interface IFeatherIcon {
 declare function gtag(...args: any[]): void;
 
 declare module 'cytoscape-fcose';
+declare module '*.css';

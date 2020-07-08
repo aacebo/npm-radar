@@ -1,10 +1,12 @@
-import { Component, ViewEncapsulation, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, ViewEncapsulation, ChangeDetectionStrategy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { take } from 'rxjs/operators';
 
 import { SearchService } from '../../resources/search';
 import { PackageService } from '../../resources/package';
+import { GraphComponent } from '../../features/graph';
+import { SidenavState } from '../../ui/sidenav';
 
 @Component({
   selector: 'nrr-package',
@@ -15,6 +17,9 @@ import { PackageService } from '../../resources/package';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PackageComponent implements OnInit {
+  @ViewChild(GraphComponent)
+  private readonly _graph: GraphComponent;
+
   menu = false;
 
   constructor(
@@ -32,5 +37,19 @@ export class PackageComponent implements OnInit {
     const text = await this.searchService.text$.pipe(take(1)).toPromise();
     this.menu = !this.menu;
     this._location.replaceState(`${location.pathname}`, this.menu ? `q=${ text || '' }` : undefined);
+  }
+
+  center() {
+    this._graph.center();
+  }
+
+  onNodeSelect(e: any) {
+    console.log(e);
+  }
+
+  onSidenavStateChange(e: SidenavState) {
+    if (e === SidenavState.Closed || e === SidenavState.Opened) {
+      setTimeout(() => this._graph.center(), 200);
+    }
   }
 }

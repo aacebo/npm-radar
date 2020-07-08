@@ -1,12 +1,12 @@
-import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy, ElementRef, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy, ElementRef, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 import cytoscape from 'cytoscape';
 
 import { GRAPH_LAYOUT } from './graph-layout.constant';
-import { GRAPH_STYLE } from './graph-style.constant';
+import css from './graph.css';
 
 @Component({
   selector: 'nrr-graph',
-  template: ``,
+  template: '',
   styleUrls: ['./graph.component.scss'],
   host: { class: 'nrr-graph' },
   encapsulation: ViewEncapsulation.None,
@@ -24,11 +24,13 @@ export class GraphComponent implements OnInit, OnDestroy {
       if (v?.length) {
         this._graph.add(v);
         this._graph.layout(GRAPH_LAYOUT).run();
-        this._graph.center();
+        this._graph.center().fit();
       }
     }
   }
   private _elements: cytoscape.ElementDefinition[] = [];
+
+  @Output() nodeSelect = new EventEmitter<any>();
 
   private _graph: cytoscape.Core;
 
@@ -37,9 +39,18 @@ export class GraphComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._graph = cytoscape({
       container: this._el.nativeElement,
-      style: GRAPH_STYLE,
-      maxZoom: 0.6,
+      style: css,
+      selectionType: 'single',
     });
+
+    this._graph.on('select', e => {
+      e.cy.elements().not(e.target).unselect();
+      this.nodeSelect.emit(e.target._private?.data);
+    });
+  }
+
+  center() {
+    this._graph.center().fit();
   }
 
   ngOnDestroy() {

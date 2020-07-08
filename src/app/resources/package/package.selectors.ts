@@ -24,7 +24,12 @@ export const selectDependencies = createSelector(selectLatestVersion, p => {
 
     edges.push({
       group: 'nodes',
-      data: { id: p._id, name: p._id },
+      selected: true,
+      data: {
+        id: p._id,
+        name: p.name,
+        version: p.version,
+      },
     });
 
     for (const d of deps) {
@@ -34,15 +39,16 @@ export const selectDependencies = createSelector(selectLatestVersion, p => {
         group: 'nodes',
         data: {
           id: dep,
-          name: dep,
+          name: d,
+          version: p.dependencies[d],
         },
       });
 
       edges.push({
         group: 'edges',
+        selectable: false,
         data: {
           id: `${p._id} -> ${dep}`,
-          name: `${p._id} -> ${dep}`,
           source: p._id,
           target: dep,
         },

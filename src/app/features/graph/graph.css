@@ -1,0 +1,28 @@
+node {
+  /* background-color: #2B65EC; */
+  color: #fff;
+  content: data(id);
+  text-valign: center;
+  font-size: 10pt;
+}
+
+node:selected {
+  background-color: #008b6e;
+  border-color: #62efcd;
+}
+
+:parent {
+  background-opacity: 0.333;
+  background-color: #2B65EC;
+}
+
+edge {
+  width: 2px;
+  line-color: #62efcd;
+  target-arrow-color: #62efcd;
+  target-arrow-shape: triangle;
+}
+
+edge:selected {
+  line-color: #F08080;
+}
