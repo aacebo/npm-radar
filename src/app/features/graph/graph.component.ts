@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy, ElementRef, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 import cytoscape from 'cytoscape';
 
+import { IPackageData } from '../../resources/package';
+
 import { GRAPH_LAYOUT } from './graph-layout.constant';
 import css from './graph.css';
 
@@ -13,6 +15,8 @@ import css from './graph.css';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GraphComponent implements OnInit, OnDestroy {
+  @Input() active: string;
+
   @Input()
   get elements() { return this._elements; }
   set elements(v) {
@@ -30,7 +34,7 @@ export class GraphComponent implements OnInit, OnDestroy {
   }
   private _elements: cytoscape.ElementDefinition[] = [];
 
-  @Output() nodeSelect = new EventEmitter<any>();
+  @Output() nodeSelect = new EventEmitter<IPackageData>();
 
   private _graph: cytoscape.Core;
 
@@ -45,7 +49,10 @@ export class GraphComponent implements OnInit, OnDestroy {
 
     this._graph.on('select', e => {
       e.cy.elements().not(e.target).unselect();
-      this.nodeSelect.emit(e.target._private?.data);
+
+      if (e.target._private?.data.name !== this.active) {
+        this.nodeSelect.emit(e.target._private?.data);
+      }
     });
   }
 

@@ -30,6 +30,7 @@
     </button>
 
     <nrr-graph
+      [active]="packageService.active$ | async"
       [elements]="packageService.dependencies$ | async"
       (nodeSelect)="onNodeSelect($event)"
     ></nrr-graph>

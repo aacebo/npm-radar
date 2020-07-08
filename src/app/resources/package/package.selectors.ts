@@ -16,43 +16,52 @@ export const selectLatestVersion = createSelector(selectPackage, p => {
   }
 });
 
-export const selectDependencies = createSelector(selectLatestVersion, p => {
+export const selectDependencies = createSelector(
+  selectLatestVersion,
+  selectPackages,
+  (pkg, _pkgs) => {
   const edges: cytoscape.ElementDefinition[] = [];
+  const keys = ['dependencies', 'devDependencies', 'peerDependencies'];
 
-  if (p?.dependencies) {
-    const deps = Object.keys(p.dependencies);
-
+  if (pkg) {
     edges.push({
       group: 'nodes',
       selected: true,
       data: {
-        id: p._id,
-        name: p.name,
-        version: p.version,
+        id: pkg._id,
+        name: pkg.name,
+        version: pkg.version,
       },
     });
 
-    for (const d of deps) {
-      const dep = `${d}${p.dependencies[d]}`;
+    for (const key of keys) {
+      const deps = Object.keys(pkg[key] || { });
 
-      edges.push({
-        group: 'nodes',
-        data: {
-          id: dep,
-          name: d,
-          version: p.dependencies[d],
-        },
-      });
+      for (const d of deps) {
+        const id = `${d}${pkg[key][d]}`;
+        const type = key === 'dependencies' ? 'normal' :
+                     key === 'devDependencies' ? 'development' : 'peer';
 
-      edges.push({
-        group: 'edges',
-        selectable: false,
-        data: {
-          id: `${p._id} -> ${dep}`,
-          source: p._id,
-          target: dep,
-        },
-      });
+        edges.push({
+          group: 'nodes',
+          data: {
+            id,
+            name: d,
+            version: pkg[key][d],
+            type,
+          },
+        });
+
+        edges.push({
+          group: 'edges',
+          selectable: false,
+          data: {
+            id: `${pkg._id} -> ${id}`,
+            source: pkg._id,
+            target: id,
+          },
+        });
+      }
     }
   }
 

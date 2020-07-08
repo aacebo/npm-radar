@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 import { take } from 'rxjs/operators';
 
 import { SearchService } from '../../resources/search';
-import { PackageService } from '../../resources/package';
+import { PackageService, IPackageData } from '../../resources/package';
 import { GraphComponent } from '../../features/graph';
 import { SidenavState } from '../../ui/sidenav';
 
@@ -43,8 +43,8 @@ export class PackageComponent implements OnInit {
     this._graph.center();
   }
 
-  onNodeSelect(e: any) {
-    console.log(e);
+  onNodeSelect(e: IPackageData) {
+    this.packageService.findOne(e.name);
   }
 
   onSidenavStateChange(e: SidenavState) {
