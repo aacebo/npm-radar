@@ -2,6 +2,7 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import cytoscape from 'cytoscape';
 
 import { IPackageState } from './package.state';
+import { INpmPackageVersion, INpmPackage } from './models';
 
 export const selectState = createFeatureSelector<IPackageState>('package');
 export const selectPackages = createSelector(selectState, s => s.packages);
@@ -19,14 +20,20 @@ export const selectLatestVersion = createSelector(selectPackage, p => {
 export const selectDependencies = createSelector(
   selectLatestVersion,
   selectPackages,
-  (pkg, _pkgs) => {
-  const edges: cytoscape.ElementDefinition[] = [];
+  (pkg, pkgs) => {
+    return addPackage(pkg, pkgs);
+});
+
+function addPackage(pkg: INpmPackageVersion, pkgs: { [name: string]: INpmPackage }) {
+  let edges: cytoscape.ElementDefinition[] = [];
   const keys = ['dependencies', 'devDependencies', 'peerDependencies'];
 
   if (pkg) {
     edges.push({
       group: 'nodes',
+      classes: 'root',
       selected: true,
+      selectable: false,
       data: {
         id: pkg._id,
         name: pkg.name,
@@ -37,33 +44,47 @@ export const selectDependencies = createSelector(
     for (const key of keys) {
       const deps = Object.keys(pkg[key] || { });
 
-      for (const d of deps) {
-        const id = `${d}${pkg[key][d]}`;
+      for (const name of deps) {
+        const version: string = pkg[key][name];
+        const id = `${name}${version}`;
         const type = key === 'dependencies' ? 'normal' :
                      key === 'devDependencies' ? 'development' : 'peer';
 
         edges.push({
           group: 'nodes',
+          classes: type,
           data: {
             id,
-            name: d,
-            version: pkg[key][d],
+            parent: pkg._id,
+            name,
+            version,
             type,
           },
         });
 
-        edges.push({
-          group: 'edges',
-          selectable: false,
-          data: {
-            id: `${pkg._id} -> ${id}`,
-            source: pkg._id,
-            target: id,
-          },
-        });
+        if (pkgs[name]) {
+          const child = pkgs[name].versions[version.replace(/[@\^~>=]/gi, '')];
+
+          if (child) {
+            edges.push({
+              group: 'edges',
+              selectable: false,
+              data: {
+                id: `${pkg._id} -> ${child._id}`,
+                source: pkg._id,
+                target: child._id,
+              },
+            });
+
+            edges = [
+              ...edges,
+              ...addPackage(child, pkgs),
+            ];
+          }
+        }
       }
     }
   }
 
   return edges;
-});
+}

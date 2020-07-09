@@ -3,7 +3,19 @@ node {
   color: #fff;
   content: data(id);
   text-valign: center;
-  font-size: 10pt;
+  font-size: 5spt;
+}
+
+node.normal {
+  shape: ellipse;
+}
+
+node.development {
+  shape: triangle;
+}
+
+node.peer {
+  shape: rectangle;
 }
 
 node:selected {
@@ -12,8 +24,8 @@ node:selected {
 }
 
 :parent {
+  text-valign: top;
   background-opacity: 0.333;
-  background-color: #2B65EC;
 }
 
 edge {

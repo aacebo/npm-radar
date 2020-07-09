@@ -28,7 +28,8 @@ export class GraphComponent implements OnInit, OnDestroy {
       if (v?.length) {
         this._graph.add(v);
         this._graph.layout(GRAPH_LAYOUT).run();
-        this._graph.center().fit();
+        this._graph.center();
+        (this._graph.nodes() as any).noOverlap({ padding: 5 });
       }
     }
   }

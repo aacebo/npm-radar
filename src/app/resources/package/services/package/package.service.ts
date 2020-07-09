@@ -31,7 +31,7 @@ export class PackageService {
     this.error$ = this._store$.pipe(select(selectors.selectError));
   }
 
-  findOne(name: string) {
-    this._store$.dispatch(actions.findOne({ name }));
+  findOne(name: string, setActive?: boolean) {
+    this._store$.dispatch(actions.findOne({ name, setActive }));
   }
 }

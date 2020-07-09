@@ -4,5 +4,5 @@ import * as actions from '../../actions';
 
 export const active = createReducer<string>(
   undefined,
-  on(actions.findOne, (_, a) => a.name),
+  on(actions.findOne, (_, a) => a.setActive ? a.name : _),
 );

@@ -20,6 +20,7 @@
     class="nrr-search-autocomplete--result-link"
     *ngFor="let package of results"
     [routerLink]="['/', package.name]"
+    routerLinkActive="active"
   >
     <nrr-search-item [package]="package"></nrr-search-item>
   </a>

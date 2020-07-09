@@ -2950,6 +2950,13 @@ cytoscape-fcose@^1.2.3:
   dependencies:
     cose-base "^1.0.0"
 
+cytoscape-no-overlap@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/cytoscape-no-overlap/-/cytoscape-no-overlap-1.0.1.tgz#e677147b357f4ec2aac9c05e04e7c6b9e0ff822b"
+  integrity sha512-fbNqkSvXFJi6JRdDeVFHAuqnQpNObURvaUS763JYnnm1vakjk1D+/ZxjTtVagg24po+InhJNjBeO8CzpsY4EbQ==
+  dependencies:
+    user "0.0.0"
+
 cytoscape@^3.15.1:
   version "3.15.1"
   resolved "https://registry.yarnpkg.com/cytoscape/-/cytoscape-3.15.1.tgz#bb5724306c61dfb1500d20ce11cd90ef768fc32b"
@@ -8546,6 +8553,11 @@ use@^3.1.0:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"
   integrity sha512-cwESVXlO3url9YWlFW/TA9cshCEhtu7IKJ/p5soJ/gGpj7vbvFrAY/eIioQ6Dw23KjZhYgiIo8HOs1nQ2vr/oQ==
+
+user@0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/user/-/user-0.0.0.tgz#f27f1b23fc511f2a8efa40db55cfba123824e02a"
+  integrity sha1-8n8bI/xRHyqO+kDbVc+6Ejgk4Co=
 
 util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   version "1.0.2"
