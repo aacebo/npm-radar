@@ -10,7 +10,11 @@ export const results = createReducer<{ [name: string]: INpmSearchPackage }>(
     const res: { [name: string]: INpmSearchPackage } = { };
 
     for (const result of a.results) {
-      res[result.name] = result;
+      res[result.name] = {
+        name: result.name,
+        version: result.version,
+        description: result.description,
+      };
     }
 
     return res;

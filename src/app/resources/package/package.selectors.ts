@@ -69,8 +69,6 @@ function addPackage(pkg: INpmPackageVersion, pkgs: { [name: string]: INpmPackage
             ...addPackage(child, pkgs),
           ];
         }
-      } else {
-        console.log(`couldn't find ${name} for root ${pkg.name}`);
       }
     }
   }

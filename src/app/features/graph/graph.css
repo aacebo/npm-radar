@@ -9,7 +9,7 @@ node {
 }
 
 node[weight] {
-  background-color: mapData(weight, 0, 500, blue, red);
+  background-color: mapData(weight, 0, 100, blue, red);
   height: data(weight);
   width: data(weight);
 }

@@ -1,7 +1,8 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { INpmPackage } from '../../models';
 import * as actions from '../../actions';
+import { INpmPackage } from '../../models';
+import { mapPackage } from '../../utils';
 
 export const packages = createReducer<{ [name: string]: INpmPackage }>(
   { },
@@ -9,14 +10,14 @@ export const packages = createReducer<{ [name: string]: INpmPackage }>(
   on(actions.findOneSuccess, (_, a) => {
     return {
       ..._,
-      [a.package.name]: a.package,
+      [a.package.name]: mapPackage(a.package),
     };
   }),
   on(actions.findSuccess, (_, a) => {
     const state = { ..._ };
 
     for (const pkg of a.packages) {
-      state[pkg.name] = pkg;
+      state[pkg.name] = mapPackage(pkg);
     }
 
     return state;
