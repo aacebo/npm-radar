@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
+import { Action } from '@ngrx/store';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { switchMap, map, catchError } from 'rxjs/operators';
+import { catchError, switchMap } from 'rxjs/operators';
 
-import * as actions from '../../actions/find-one.actions';
+import * as actions from '../../actions';
 import { PackageHttpService } from '../../services';
 
 @Injectable()
@@ -12,7 +13,18 @@ export class FindOneEffects {
     ofType(actions.findOne),
     switchMap(a =>
       this._packageHttpService.findOne(a.name).pipe(
-        map(pkg => actions.findOneSuccess({ package: pkg })),
+        switchMap(pkg => {
+          const toDispatch: Action[] = [actions.findOneSuccess({ package: pkg })];
+          const latest = pkg['dist-tags']['latest'];
+          const version = a.version || latest;
+          const names = Object.keys(pkg.versions[version]?.dependencies || { });
+
+          if (names.length) {
+            toDispatch.push(actions.find({ dependencies: pkg.versions[version].dependencies }));
+          }
+
+          return toDispatch;
+        }),
         catchError(error => of(actions.findOneFailed({ error }))),
       ),
     ),

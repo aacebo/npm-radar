@@ -3,24 +3,15 @@ node {
   color: #fff;
   content: data(id);
   text-valign: center;
-  font-size: 5spt;
-}
-
-node.normal {
-  shape: ellipse;
-}
-
-node.development {
-  shape: triangle;
-}
-
-node.peer {
-  shape: rectangle;
-}
-
-node:selected {
+  font-size: 5pt;
   background-color: #008b6e;
   border-color: #62efcd;
+}
+
+node[weight] {
+  background-color: mapData(weight, 0, 500, blue, red);
+  height: data(weight);
+  width: data(weight);
 }
 
 :parent {
@@ -29,7 +20,7 @@ node:selected {
 }
 
 edge {
-  width: 2px;
+  width: 1px;
   line-color: #62efcd;
   target-arrow-color: #62efcd;
   target-arrow-shape: triangle;

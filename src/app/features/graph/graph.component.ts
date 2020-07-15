@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy, ElementRef, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { coerceNumberProperty } from '@angular/cdk/coercion';
 import cytoscape from 'cytoscape';
-
-import { IPackageData } from '../../resources/package';
 
 import { GRAPH_LAYOUT } from './graph-layout.constant';
 import css from './graph.css';
@@ -15,50 +14,54 @@ import css from './graph.css';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GraphComponent implements OnInit, OnDestroy {
-  @Input() active: string;
+  @Input() elements: cytoscape.ElementDefinition[] = [];
 
   @Input()
-  get elements() { return this._elements; }
-  set elements(v) {
-    this._elements = v;
-
-    if (this._graph) {
-      this._graph.elements().remove();
-
-      if (v?.length) {
-        this._graph.add(v);
-        this._graph.layout(GRAPH_LAYOUT).run();
-        this._graph.center();
-        (this._graph.nodes() as any).noOverlap({ padding: 5 });
-      }
-    }
+  get zoom() { return this._zoom; }
+  set zoom(v) {
+    this._zoom = coerceNumberProperty(v);
+    this.zoomChange.emit(v);
   }
-  private _elements: cytoscape.ElementDefinition[] = [];
+  private _zoom = 0.6;
 
-  @Output() nodeSelect = new EventEmitter<IPackageData>();
+  @Output() zoomChange = new EventEmitter<number>();
 
   private _graph: cytoscape.Core;
+  private _zoomTimeout: NodeJS.Timeout;
 
   constructor(private readonly _el: ElementRef<HTMLElement>) { }
 
   ngOnInit() {
     this._graph = cytoscape({
       container: this._el.nativeElement,
+      elements: this.elements,
+      layout: GRAPH_LAYOUT,
       style: css,
       selectionType: 'single',
+      zoom: this._zoom,
     });
 
-    this._graph.on('select', e => {
-      e.cy.elements().not(e.target).unselect();
-
-      if (e.target._private?.data.name !== this.active) {
-        this.nodeSelect.emit(e.target._private?.data);
+    this._graph.on('zoom', () => {
+      if (this._zoomTimeout) {
+        clearTimeout(this._zoomTimeout);
+        this._zoomTimeout = undefined;
       }
+
+      this._zoomTimeout = setTimeout(() => {
+        this.zoom = this._graph.zoom();
+        this._zoomTimeout = undefined;
+      }, 500);
     });
+
+    this._graph.center().fit();
   }
 
   center() {
-    this._graph.center().fit();
+    this._graph.center();
+  }
+
+  fit() {
+    this._graph.fit();
   }
 
   ngOnDestroy() {

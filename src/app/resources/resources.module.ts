@@ -18,7 +18,7 @@ import { SearchModule } from './search';
     StoreModule.forRoot({ }),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({
-      maxAge: 10,
+      maxAge: 100,
       logOnly: environment.production,
     }),
 

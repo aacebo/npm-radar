@@ -15,7 +15,9 @@ import * as actions from '../../actions';
 export class PackageService {
   readonly state$: Observable<IPackageState>;
   readonly active$: Observable<string>;
+  readonly version$: Observable<string>;
   readonly packages$: Observable<{ [name: string]: INpmPackage }>;
+  readonly loading$: Observable<number>;
   readonly package$: Observable<INpmPackage>;
   readonly latestVersion$: Observable<INpmPackageVersion>;
   readonly dependencies$: Observable<cytoscape.ElementDefinition[]>;
@@ -24,14 +26,20 @@ export class PackageService {
   constructor(private readonly _store$: Store<IPackageState>) {
     this.state$ = this._store$.pipe(select(selectors.selectState));
     this.active$ = this._store$.pipe(select(selectors.selectActive));
+    this.version$ = this._store$.pipe(select(selectors.selectVersion));
     this.packages$ = this._store$.pipe(select(selectors.selectPackages));
+    this.loading$ = this._store$.pipe(select(selectors.selectLoading));
     this.package$ = this._store$.pipe(select(selectors.selectPackage));
     this.latestVersion$ = this._store$.pipe(select(selectors.selectLatestVersion));
     this.dependencies$ = this._store$.pipe(select(selectors.selectDependencies));
     this.error$ = this._store$.pipe(select(selectors.selectError));
   }
 
-  findOne(name: string, setActive?: boolean) {
-    this._store$.dispatch(actions.findOne({ name, setActive }));
+  find(dependencies: { [name: string]: string }) {
+    this._store$.dispatch(actions.find({ dependencies }));
+  }
+
+  findOne(name: string, version?: string) {
+    this._store$.dispatch(actions.findOne({ name, version }));
   }
 }

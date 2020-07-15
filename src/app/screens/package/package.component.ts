@@ -5,6 +5,7 @@ import { take } from 'rxjs/operators';
 
 import { SearchService } from '../../resources/search';
 import { PackageService, IPackageData } from '../../resources/package';
+
 import { GraphComponent } from '../../features/graph';
 import { SidenavState } from '../../ui/sidenav';
 
@@ -18,9 +19,10 @@ import { SidenavState } from '../../ui/sidenav';
 })
 export class PackageComponent implements OnInit {
   @ViewChild(GraphComponent)
-  private readonly _graph: GraphComponent;
+  private readonly _graph?: GraphComponent;
 
   menu = false;
+  zoom = 0.6;
 
   constructor(
     readonly searchService: SearchService,
@@ -40,16 +42,17 @@ export class PackageComponent implements OnInit {
   }
 
   center() {
-    this._graph.center();
+    this._graph?.center();
   }
 
-  onNodeSelect(e: IPackageData) {
-    this.packageService.findOne(e.name);
+  async onNodeSelect(e: IPackageData) {
+    const version = await this.packageService.version$.pipe(take(1)).toPromise();
+    this.packageService.findOne(e.name, version);
   }
 
   onSidenavStateChange(e: SidenavState) {
     if (e === SidenavState.Closed || e === SidenavState.Opened) {
-      setTimeout(() => this._graph.center(), 200);
+      setTimeout(() => this._graph?.center(), 200);
     }
   }
 }

@@ -5,7 +5,7 @@ import { INpmPackage } from '../models';
 
 export const findOne = createAction(
   '[PACKAGE] FindOne',
-  props<{ readonly name: string; readonly setActive?: boolean; }>(),
+  props<{ readonly name: string; readonly version?: string; }>(),
 );
 
 export const findOneSuccess = createAction(

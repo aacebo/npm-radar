@@ -6,6 +6,8 @@ import * as fromReducers from './reducers';
 
 export interface IPackageState {
   readonly active: string;
+  readonly version?: string;
+  readonly loading: number;
   readonly packages: { [name: string]: INpmPackage; };
   readonly error?: HttpErrorResponse;
 }
@@ -15,5 +17,7 @@ export function reducers(state: IPackageState, action: Action) {
     active: fromReducers.active,
     packages: fromReducers.packages,
     error: fromReducers.error,
+    version: fromReducers.version,
+    loading: fromReducers.loading,
   })(state, action);
 }

@@ -1,5 +1,5 @@
 {
-  "/api/*": {
+  "/api/": {
     "target": "https://registry.npmjs.org",
     "secure": true,
     "changeOrigin": true,
@@ -7,7 +7,7 @@
       "^/api": ""
     }
   },
-  "/searchapi/*": {
+  "/searchapi/": {
     "target": "https://www.npmjs.com",
     "secure": true,
     "changeOrigin": true,

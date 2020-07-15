@@ -12,6 +12,7 @@ import * as effects from './effects';
     HttpClientModule,
     StoreModule.forFeature('package', reducers),
     EffectsModule.forFeature([
+      effects.FindEffects,
       effects.FindOneEffects,
     ]),
   ],

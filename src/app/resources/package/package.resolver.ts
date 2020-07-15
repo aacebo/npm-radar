@@ -9,6 +9,7 @@ export class PackageResolver implements Resolve<void> {
 
   resolve(route: ActivatedRouteSnapshot) {
     const name = route.paramMap.get('name');
-    this._packageService.findOne(name, true);
+    const version = route.queryParamMap.get('v');
+    this._packageService.findOne(name, version);
   }
 }
