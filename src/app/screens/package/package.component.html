@@ -33,7 +33,6 @@
       *ngIf="!(packageService.loading$ | async)"
       [elements]="packageService.dependencies$ | async"
       [(zoom)]="zoom"
-      (nodeSelect)="onNodeSelect($event)"
     ></nrr-graph>
   </nrr-sidenav-content>
 </nrr-sidenav-container>
