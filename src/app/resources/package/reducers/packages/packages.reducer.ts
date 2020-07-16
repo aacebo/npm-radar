@@ -13,7 +13,7 @@ export const packages = createReducer<{ [name: string]: INpmPackage }>(
       [a.package.name]: mapPackage(a.package),
     };
   }),
-  on(actions.findSuccess, (_, a) => {
+  on(actions.findComplete, (_, a) => {
     const state = { ..._ };
 
     for (const pkg of a.packages) {

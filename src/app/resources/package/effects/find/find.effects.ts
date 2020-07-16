@@ -6,29 +6,35 @@ import { catchError, withLatestFrom, map, mergeMap } from 'rxjs/operators';
 import * as actions from '../../actions/find.actions';
 import { PackageHttpService, PackageService } from '../../services';
 import { parseVersion } from '../../utils';
-
-const loading: { [name: string]: boolean } = { };
+import { INpmPackage } from '../../models';
 
 @Injectable()
 export class FindEffects {
+  private readonly _loading: { [name: string]: boolean } = { };
+  private _packages: INpmPackage[] = [];
+
   readonly find$ = createEffect(() => this._actions$.pipe(
     ofType(actions.find),
     withLatestFrom(this._packageService.state$),
     mergeMap(([a, s]) => {
       const names = Object.keys(a.dependencies);
-      const calls = names.filter(n => !(n in loading) && !(n in s.packages)).map(n => {
-        loading[n] = true;
+      const calls = names.filter(n => !(n in this._loading) && !(n in s.packages)).map(n => {
+        this._loading[n] = true;
         return this._packageHttpService.findOne(n);
       });
 
       if (!calls.length) {
-        return of(actions.findCancelled());
+        const packages = this._packages.slice();
+        this._packages = [];
+        return of(actions.findComplete({ packages }));
       }
 
       return forkJoin(calls).pipe(
         map(packages => {
+          this._packages = [...this._packages, ...packages];
+
           for (const pkg of packages) {
-            delete loading[pkg.name];
+            delete this._loading[pkg.name];
             const dependencies = pkg.versions[parseVersion(a.dependencies[pkg.name])]?.dependencies || { };
 
             if (Object.keys(dependencies).length) {
@@ -36,7 +42,7 @@ export class FindEffects {
             }
           }
 
-          return actions.findSuccess({ packages });
+          return actions.findSuccess();
         }),
         catchError(error => of(actions.findFailed({ error }))),
       );

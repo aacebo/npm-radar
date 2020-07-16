@@ -68,6 +68,8 @@ function addPackage(pkg: INpmPackageVersion, pkgs: { [name: string]: INpmPackage
             ...edges,
             ...addPackage(child, pkgs),
           ];
+        } else {
+          console.log(name);
         }
       }
     }

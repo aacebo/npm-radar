@@ -10,11 +10,11 @@ export const find = createAction(
 
 export const findSuccess = createAction(
   '[PACKAGE] FindSuccess',
-  props<{ readonly packages: INpmPackage[] }>(),
 );
 
-export const findCancelled = createAction(
-  '[PACKAGE] FindCancelled',
+export const findComplete = createAction(
+  '[PACKAGE] FindComplete',
+  props<{ readonly packages: INpmPackage[] }>(),
 );
 
 export const findFailed = createAction(
