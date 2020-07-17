@@ -6,8 +6,8 @@
     <ng-template nrrSidenavBody>
       <nrr-search-autocomplete
         [value]="searchService.text$ | async"
-        [results]="searchService.entities$ | async"
-        (valueChange)="searchService.find($event)"
+        [results]="searchService.results$ | async"
+        (valueChange)="searchService.find($event).subscribe()"
       ></nrr-search-autocomplete>
     </ng-template>
   </nrr-sidenav>
@@ -30,8 +30,8 @@
     </button>
 
     <nrr-graph
-      *ngIf="!(packageService.loading$ | async)"
-      [elements]="packageService.dependencies$ | async"
+      *ngIf="!(packageService.loading$ | async) && !!(packageService.elements$ | async)"
+      [elements]="packageService.elements$ | async"
       [(zoom)]="zoom"
     ></nrr-graph>
   </nrr-sidenav-content>

@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { startWith, debounceTime, takeUntil, distinctUntilChanged, skip } from 'rxjs/operators';
 
-import { INpmSearchPackage } from '../../resources/search';
+import { INpmSearchPackage } from '../../screens/search';
 
 @Component({
   selector: 'nrr-search-autocomplete',

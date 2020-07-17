@@ -3,11 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { take } from 'rxjs/operators';
 
-import { SearchService } from '../../resources/search';
-import { PackageService } from '../../resources/package';
+import { SearchService } from '../search';
 
 import { GraphComponent } from '../../features/graph';
 import { SidenavState } from '../../ui/sidenav';
+
+import { PackageService } from './package.service';
 
 @Component({
   selector: 'nrr-package',
@@ -32,7 +33,16 @@ export class PackageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.menu = this._route.snapshot.queryParamMap.has('q');
+    const q = this._route.snapshot.queryParamMap.get('q');
+    const name = this._route.snapshot.paramMap.get('name');
+    const v = this._route.snapshot.queryParamMap.get('v');
+    this.menu = !!q;
+
+    this.packageService.findOne(name, v).subscribe();
+
+    if (q) {
+      this.searchService.find(q).subscribe();
+    }
   }
 
   async toggle() {
