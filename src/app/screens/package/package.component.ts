@@ -1,7 +1,6 @@
 import { Component, ViewEncapsulation, ChangeDetectionStrategy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
-import { take } from 'rxjs/operators';
+import { withLatestFrom } from 'rxjs/operators';
 
 import { SearchService } from '../search';
 
@@ -29,26 +28,22 @@ export class PackageComponent implements OnInit {
     readonly searchService: SearchService,
     readonly packageService: PackageService,
     private readonly _route: ActivatedRoute,
-    private readonly _location: Location,
   ) { }
 
   ngOnInit() {
-    const q = this._route.snapshot.queryParamMap.get('q');
-    const name = this._route.snapshot.paramMap.get('name');
-    const v = this._route.snapshot.queryParamMap.get('v');
-    this.menu = !!q;
+    this._route.paramMap.pipe(
+      withLatestFrom(this._route.queryParamMap),
+    ).subscribe(([paramMap, queryParamMap]) => {
+      const name = paramMap.get('name');
+      const v = queryParamMap.get('v');
+      this.menu = false;
 
-    this.packageService.findOne(name, v).subscribe();
-
-    if (q) {
-      this.searchService.find(q).subscribe();
-    }
+      this.packageService.findOne(name, v).subscribe();
+    });
   }
 
-  async toggle() {
-    const text = await this.searchService.text$.pipe(take(1)).toPromise();
+  toggle() {
     this.menu = !this.menu;
-    this._location.replaceState(`${location.pathname}`, this.menu ? `q=${ text || '' }` : undefined);
   }
 
   center() {

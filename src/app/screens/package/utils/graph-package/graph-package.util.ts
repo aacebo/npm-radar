@@ -1,3 +1,5 @@
+import { environment } from '../../../../../environments/environment';
+
 import { INpmPackageVersion, INpmPackage } from '../../models';
 import { parseVersion } from '../parse-version/parse-version.util';
 
@@ -40,8 +42,8 @@ export function graphPackage(pkg: INpmPackageVersion, pkgs: { [name: string]: IN
             ...graphPackage(child, pkgs),
           ];
         }
-      } else {
-        console.log(name);
+      } else if (!environment.production) {
+        console.warn(`${pkg._id} not found`);
       }
     }
   }
