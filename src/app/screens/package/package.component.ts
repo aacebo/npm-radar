@@ -6,6 +6,7 @@ import { GraphComponent, INodeData } from '../../features/graph';
 
 import { SearchService } from '../search';
 import { PackageService } from './package.service';
+import { IMenus } from './menus.interface';
 
 @Component({
   selector: 'nrr-package',
@@ -19,8 +20,11 @@ export class PackageComponent implements OnInit {
   @ViewChild(GraphComponent)
   private readonly _graph?: GraphComponent;
 
-  menu = false;
   zoom = 0.6;
+  readonly menus: IMenus = {
+    search: false,
+    menu: false,
+  };
 
   constructor(
     readonly searchService: SearchService,
@@ -35,14 +39,14 @@ export class PackageComponent implements OnInit {
     ).subscribe(([paramMap, queryParamMap]) => {
       const name = paramMap.get('name');
       const v = queryParamMap.get('v');
-      this.menu = false;
+      this.menus.search = false;
 
       this.packageService.findOne(name, v).subscribe();
     });
   }
 
-  toggle() {
-    this.menu = !this.menu;
+  toggle(key: keyof IMenus) {
+    this.menus[key] = !this.menus[key];
   }
 
   center() {

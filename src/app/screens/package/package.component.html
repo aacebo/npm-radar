@@ -1,6 +1,6 @@
 <nrr-sidenav-container>
   <nrr-sidenav
-    [(open)]="menu"
+    [(open)]="menus.search"
     mode="over"
   >
     <ng-template nrrSidenavBody>
@@ -13,27 +13,49 @@
   </nrr-sidenav>
 
   <nrr-sidenav-content>
-    <button
-      class="menu-btn"
-      nrr-icon-button
-      (click)="toggle()"
-    >
-      <nrr-icon name="menu"></nrr-icon>
-    </button>
+    <nrr-sidenav-container>
+      <nrr-sidenav
+        [(open)]="menus.menu"
+        mode="over"
+        position="end"
+      >
+        <ng-template nrrSidenavBody>
+          <p>testing123</p>
+        </ng-template>
+      </nrr-sidenav>
 
-    <button
-      class="center-btn"
-      nrr-icon-button
-      (click)="center()"
-    >
-      <nrr-icon name="crosshair"></nrr-icon>
-    </button>
+      <nrr-sidenav-content>
+        <button
+          class="search-btn"
+          nrr-icon-button
+          (click)="toggle('search')"
+        >
+          <nrr-icon name="search"></nrr-icon>
+        </button>
 
-    <nrr-graph
-      *ngIf="!(packageService.loading$ | async) && !!(packageService.elements$ | async)"
-      [elements]="packageService.elements$ | async"
-      [(zoom)]="zoom"
-      (nodeSelect)="onNodeSelect($event)"
-    ></nrr-graph>
+        <button
+          class="menu-btn"
+          nrr-icon-button
+          (click)="toggle('menu')"
+        >
+          <nrr-icon name="menu"></nrr-icon>
+        </button>
+
+        <button
+          class="center-btn"
+          nrr-icon-button
+          (click)="center()"
+        >
+          <nrr-icon name="crosshair"></nrr-icon>
+        </button>
+
+        <nrr-graph
+          *ngIf="!(packageService.loading$ | async) && !!(packageService.elements$ | async)"
+          [elements]="packageService.elements$ | async"
+          [(zoom)]="zoom"
+          (nodeSelect)="onNodeSelect($event)"
+        ></nrr-graph>
+      </nrr-sidenav-content>
+    </nrr-sidenav-container>
   </nrr-sidenav-content>
 </nrr-sidenav-container>

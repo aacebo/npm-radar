@@ -14,9 +14,14 @@
     .nrr-sidenav-content {
       display: flex;
 
-      .menu-btn {
+      .search-btn {
         top: 12px;
         left: 10px;
+      }
+
+      .menu-btn {
+        top: 12px;
+        right: 10px;
       }
 
       .center-btn {
@@ -24,6 +29,7 @@
         bottom: 10px;
       }
 
+      .search-btn,
       .menu-btn,
       .center-btn {
         position: absolute;
