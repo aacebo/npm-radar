@@ -12,7 +12,7 @@ export function graphPackage(pkg: INpmPackageVersion, pkgs: { [name: string]: IN
     edges.push({
       group: 'nodes',
       classes: 'root',
-      selectable: false,
+      selectable: true,
       data: {
         id: pkg._id,
         name: pkg.name,

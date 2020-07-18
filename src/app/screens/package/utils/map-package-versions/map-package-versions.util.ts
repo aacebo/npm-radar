@@ -6,7 +6,7 @@ export function mapPackageVersions(p: INpmPackage) {
   for (const v of Object.keys(p.versions)) {
     versions[v] = {
       _id: p.versions[v]._id,
-      name: p.versions[v].version,
+      name: p.versions[v].name,
       version: p.versions[v].version,
       description: p.versions[v].description,
       dependencies: p.versions[v].dependencies,

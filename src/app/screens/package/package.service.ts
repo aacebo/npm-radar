@@ -37,19 +37,13 @@ export class PackageService {
 
         if (Object.keys(dependencies).length) {
           this._find(dependencies).subscribe(pkgs => {
-              const _packages: { [name: string]: INpmPackage } = {
+              this._onComplete(name, v, {
                 [pkg.name]: mapPackage(pkg),
                 ...pkgs,
-              };
-
-              this._packages$.next(_packages);
-              this._elements$.next(graphPackage(this._packages$.value[name]?.versions[v], this._packages$.value));
-              this._loading$.next(false);
+              });
           });
         } else {
-          this._packages$.next({ [pkg.name]: mapPackage(pkg) });
-          this._elements$.next(graphPackage(this._packages$.value[name]?.versions[v], this._packages$.value));
-          this._loading$.next(false);
+          this._onComplete(name, v, { [pkg.name]: mapPackage(pkg) });
         }
 
         return pkg;
@@ -58,7 +52,7 @@ export class PackageService {
   }
 
   private _find(deps: { [name: string]: string }) {
-    let _found: { [name: string]: INpmPackage } = { };
+    let _packages: { [name: string]: INpmPackage } = { };
     const _versions: { [name: string]: string } = { };
 
     const find = (dependencies: { [name: string]: string }) => {
@@ -69,23 +63,30 @@ export class PackageService {
       return forkJoin(calls).pipe(
         switchMap(async res => {
           for (const pkg of res) {
-            _found[pkg.name] = mapPackage(pkg);
+            _packages[pkg.name] = mapPackage(pkg);
             _versions[pkg.name] = dependencies[pkg.name];
+
             const p = await find(pkg.versions[parseVersion(dependencies[pkg.name])]?.dependencies || { }).toPromise();
 
             if (p) {
-              _found = {
-                ..._found,
+              _packages = {
+                ..._packages,
                 ...p,
               };
             }
           }
 
-          return _found;
+          return _packages;
         }),
       );
     };
 
     return find(deps);
+  }
+
+  private _onComplete(name: string, version: string, pkgs: { [name: string]: INpmPackage }) {
+    this._packages$.next(pkgs);
+    this._elements$.next(graphPackage(pkgs[name]?.versions[version], pkgs));
+    this._loading$.next(false);
   }
 }

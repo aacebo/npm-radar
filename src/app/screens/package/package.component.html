@@ -1,7 +1,7 @@
 <nrr-sidenav-container>
   <nrr-sidenav
     [(open)]="menu"
-    (stateChange)="onSidenavStateChange($event)"
+    mode="over"
   >
     <ng-template nrrSidenavBody>
       <nrr-search-autocomplete
@@ -33,6 +33,7 @@
       *ngIf="!(packageService.loading$ | async) && !!(packageService.elements$ | async)"
       [elements]="packageService.elements$ | async"
       [(zoom)]="zoom"
+      (nodeSelect)="onNodeSelect($event)"
     ></nrr-graph>
   </nrr-sidenav-content>
 </nrr-sidenav-container>

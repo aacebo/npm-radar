@@ -1,12 +1,10 @@
 import { Component, ViewEncapsulation, ChangeDetectionStrategy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { withLatestFrom } from 'rxjs/operators';
 
+import { GraphComponent, INodeData } from '../../features/graph';
+
 import { SearchService } from '../search';
-
-import { GraphComponent } from '../../features/graph';
-import { SidenavState } from '../../ui/sidenav';
-
 import { PackageService } from './package.service';
 
 @Component({
@@ -28,6 +26,7 @@ export class PackageComponent implements OnInit {
     readonly searchService: SearchService,
     readonly packageService: PackageService,
     private readonly _route: ActivatedRoute,
+    private readonly _router: Router,
   ) { }
 
   ngOnInit() {
@@ -36,6 +35,7 @@ export class PackageComponent implements OnInit {
     ).subscribe(([paramMap, queryParamMap]) => {
       const name = paramMap.get('name');
       const v = queryParamMap.get('v');
+      this.menu = false;
 
       this.packageService.findOne(name, v).subscribe();
     });
@@ -49,9 +49,7 @@ export class PackageComponent implements OnInit {
     this._graph?.center();
   }
 
-  onSidenavStateChange(e: SidenavState) {
-    if (e === SidenavState.Closed || e === SidenavState.Opened) {
-      setTimeout(() => this._graph?.center(), 200);
-    }
+  onNodeSelect(e: INodeData) {
+    this._router.navigateByUrl(`${encodeURIComponent(e.name)}?v=${e.version}`);
   }
 }
