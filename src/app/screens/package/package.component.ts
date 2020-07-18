@@ -1,13 +1,11 @@
 import { Component, ViewEncapsulation, ChangeDetectionStrategy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
-import { take } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
+import { withLatestFrom } from 'rxjs/operators';
 
-import { SearchService } from '../../resources/search';
-import { PackageService } from '../../resources/package';
+import { GraphComponent, INodeData } from '../../features/graph';
 
-import { GraphComponent } from '../../features/graph';
-import { SidenavState } from '../../ui/sidenav';
+import { SearchService } from '../search';
+import { PackageService } from './package.service';
 
 @Component({
   selector: 'nrr-package',
@@ -28,26 +26,30 @@ export class PackageComponent implements OnInit {
     readonly searchService: SearchService,
     readonly packageService: PackageService,
     private readonly _route: ActivatedRoute,
-    private readonly _location: Location,
+    private readonly _router: Router,
   ) { }
 
   ngOnInit() {
-    this.menu = this._route.snapshot.queryParamMap.has('q');
+    this._route.paramMap.pipe(
+      withLatestFrom(this._route.queryParamMap),
+    ).subscribe(([paramMap, queryParamMap]) => {
+      const name = paramMap.get('name');
+      const v = queryParamMap.get('v');
+      this.menu = false;
+
+      this.packageService.findOne(name, v).subscribe();
+    });
   }
 
-  async toggle() {
-    const text = await this.searchService.text$.pipe(take(1)).toPromise();
+  toggle() {
     this.menu = !this.menu;
-    this._location.replaceState(`${location.pathname}`, this.menu ? `q=${ text || '' }` : undefined);
   }
 
   center() {
     this._graph?.center();
   }
 
-  onSidenavStateChange(e: SidenavState) {
-    if (e === SidenavState.Closed || e === SidenavState.Opened) {
-      setTimeout(() => this._graph?.center(), 200);
-    }
+  onNodeSelect(e: INodeData) {
+    this._router.navigateByUrl(`${encodeURIComponent(e.name)}?v=${e.version}`);
   }
 }

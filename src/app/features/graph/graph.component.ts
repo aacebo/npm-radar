@@ -3,6 +3,7 @@ import { coerceNumberProperty } from '@angular/cdk/coercion';
 import cytoscape from 'cytoscape';
 
 import { GRAPH_LAYOUT } from './graph-layout.constant';
+import { INodeData } from './node-data.interface';
 import css from './graph.css';
 
 @Component({
@@ -25,6 +26,7 @@ export class GraphComponent implements OnInit, OnDestroy {
   private _zoom = 0.6;
 
   @Output() zoomChange = new EventEmitter<number>();
+  @Output() nodeSelect = new EventEmitter<INodeData>();
 
   private _graph: cytoscape.Core;
   private _zoomTimeout: NodeJS.Timeout;
@@ -51,6 +53,10 @@ export class GraphComponent implements OnInit, OnDestroy {
         this.zoom = this._graph.zoom();
         this._zoomTimeout = undefined;
       }, 500);
+    });
+
+    this._graph.on('select', e => {
+      this.nodeSelect.emit(e.target._private.data);
     });
 
     this._graph.center().fit();

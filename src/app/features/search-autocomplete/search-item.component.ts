@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
 
-import { INpmSearchPackage } from '../../resources/search';
+import { INpmSearchPackage } from '../../screens/search';
 
 @Component({
   selector: 'nrr-search-item',

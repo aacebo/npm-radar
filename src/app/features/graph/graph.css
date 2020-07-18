@@ -23,7 +23,9 @@ edge {
   width: 1px;
   line-color: #62efcd;
   target-arrow-color: #62efcd;
-  target-arrow-shape: triangle;
+  curve-style: bezier;
+  target-arrow-shape: triangle-backcurve;
+  arrow-scale: 0.5;
 }
 
 edge:selected {

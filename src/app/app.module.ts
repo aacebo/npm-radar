@@ -1,13 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import cytoscape from 'cytoscape';
 import fcose from 'cytoscape-fcose';
 import noOverlap from 'cytoscape-no-overlap';
 
 import { ProgressModule } from './ui/progress';
-import { ResourcesModule } from './resources';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -21,9 +21,9 @@ cytoscape.use(noOverlap);
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
 
     AppRoutingModule,
-    ResourcesModule,
     ProgressModule.withHttp(),
   ],
 })

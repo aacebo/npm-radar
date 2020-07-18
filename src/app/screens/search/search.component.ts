@@ -1,6 +1,7 @@
-import { Component, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewEncapsulation, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
-import { SearchService } from '../../resources/search';
+import { SearchService } from './search.service';
 
 @Component({
   selector: 'nrr-search',
@@ -10,6 +11,17 @@ import { SearchService } from '../../resources/search';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchComponent {
-  constructor(readonly searchService: SearchService) { }
+export class SearchComponent implements OnInit {
+  constructor(
+    readonly searchService: SearchService,
+    private readonly _route: ActivatedRoute,
+  ) { }
+
+  ngOnInit() {
+    const q = this._route.snapshot.queryParamMap.get('q');
+
+    if (q) {
+      this.searchService.find(q).subscribe();
+    }
+  }
 }
