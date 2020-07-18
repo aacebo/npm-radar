@@ -59,16 +59,18 @@ export class PackageService {
 
   private _find(deps: { [name: string]: string }) {
     let _found: { [name: string]: INpmPackage } = { };
+    const _versions: { [name: string]: string } = { };
 
     const find = (dependencies: { [name: string]: string }) => {
       const names = Object.keys(dependencies);
-      const calls = names.filter(n => !this._packages$.value[n] && !_found[n])
+      const calls = names.filter(n => !_versions[n] || _versions[n] !== dependencies[n])
                          .map(n => this._packageHttpService.findOne(n));
 
       return forkJoin(calls).pipe(
         switchMap(async res => {
           for (const pkg of res) {
             _found[pkg.name] = mapPackage(pkg);
+            _versions[pkg.name] = dependencies[pkg.name];
             const p = await find(pkg.versions[parseVersion(dependencies[pkg.name])]?.dependencies || { }).toPromise();
 
             if (p) {

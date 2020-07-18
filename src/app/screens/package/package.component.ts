@@ -36,7 +36,6 @@ export class PackageComponent implements OnInit {
     ).subscribe(([paramMap, queryParamMap]) => {
       const name = paramMap.get('name');
       const v = queryParamMap.get('v');
-      this.menu = false;
 
       this.packageService.findOne(name, v).subscribe();
     });

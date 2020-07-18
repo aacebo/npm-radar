@@ -43,7 +43,7 @@ export function graphPackage(pkg: INpmPackageVersion, pkgs: { [name: string]: IN
           ];
         }
       } else if (!environment.production) {
-        console.warn(`${pkg._id} not found`);
+        console.warn(`${name} of parent ${pkg._id} not found!`);
       }
     }
   }
