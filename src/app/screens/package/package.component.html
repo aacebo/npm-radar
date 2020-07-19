@@ -32,6 +32,7 @@
           class="search-btn"
           nrr-icon-button
           [nrrBadge]="(searchService.results$ | async).length"
+          [nrrBadgeDisabled]="!(searchService.results$ | async).length"
           (click)="toggle('search')"
         >
           <nrr-icon name="search"></nrr-icon>
@@ -41,6 +42,7 @@
           class="menu-btn"
           nrr-icon-button
           [nrrBadge]="(packageService.packages$ | async).length"
+          [nrrBadgeDisabled]="!(packageService.packages$ | async).length"
           nrrBadgePosition="top left"
           (click)="toggle('menu')"
         >
