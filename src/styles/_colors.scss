@@ -1,0 +1,16 @@
+@mixin nrr-colors {
+  &.primary {
+    color: var(--text-light);
+    background-color: var(--primary);
+  }
+
+  &.warn {
+    color: var(--text-dark);
+    background-color: var(--warn);
+  }
+
+  &.danger {
+    color: var(--text-light);
+    background-color: var(--danger);
+  }
+}

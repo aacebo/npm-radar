@@ -1,0 +1,34 @@
+@import '../../../styles/animations';
+@import '../../../styles/box-shadow';
+@import '../../../styles/colors';
+
+@import './badge';
+
+.nrr-badge {
+  display: inline-block;
+  flex-direction: column;
+  justify-content: center;
+  width: auto;
+  box-shadow: $nrr-shadow-4dp;
+  border-radius: 12px;
+  font-size: 0.8em;
+  font-weight: 700;
+  padding: 5px 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  z-index: 4;
+  animation: $nrr-animation-duration $nrr-animation-timing-function popIn;
+
+  @include nrr-colors;
+
+  &.anchored {
+    position: absolute;
+
+    @include nrr-badge-positions;
+  }
+
+  &.disabled {
+    display: none;
+  }
+}

@@ -32,7 +32,7 @@
       .search-btn,
       .menu-btn,
       .center-btn {
-        position: absolute;
+        position: absolute !important;
         z-index: 3;
 
         &:hover {
