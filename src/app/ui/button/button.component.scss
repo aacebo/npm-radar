@@ -39,8 +39,9 @@
 
   &.nrr-icon-button {
     display: flex;
-    padding: 5px;
+    padding: 8px;
     margin: auto 0;
+    background-color: var(--bg-light);
   }
 
   &.nrr-link-button {
