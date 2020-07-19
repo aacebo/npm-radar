@@ -22,6 +22,7 @@
         <ng-template nrrSidenavBody>
           <nrr-package-list
             [packages]="packageService.packages$ | async"
+            (packageSelect)="onPackageSelect($event)"
           ></nrr-package-list>
         </ng-template>
       </nrr-sidenav>

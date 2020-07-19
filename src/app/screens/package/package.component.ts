@@ -5,8 +5,10 @@ import { withLatestFrom } from 'rxjs/operators';
 import { GraphComponent, INodeData } from '../../features/graph';
 
 import { SearchService } from '../search';
+
 import { PackageService } from './package.service';
 import { IMenus } from './menus.interface';
+import { INpmPackage } from './models';
 
 @Component({
   selector: 'nrr-package',
@@ -55,5 +57,10 @@ export class PackageComponent implements OnInit {
 
   onNodeSelect(e: INodeData) {
     this._router.navigateByUrl(`${encodeURIComponent(e.name)}?v=${e.version}`);
+  }
+
+  onPackageSelect(e: INpmPackage) {
+    this._graph?.highlight(e.name);
+    this.menus.menu = false;
   }
 }

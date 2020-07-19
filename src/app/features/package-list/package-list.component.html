@@ -19,5 +19,6 @@
   <nrr-package-list-item
     *ngFor="let package of filtered"
     [package]="package"
+    (click)="packageSelect.emit(package)"
   ></nrr-package-list-item>
 </div>

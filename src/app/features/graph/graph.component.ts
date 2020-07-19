@@ -62,6 +62,10 @@ export class GraphComponent implements OnInit, OnDestroy {
     this._graph.center().fit();
   }
 
+  ngOnDestroy() {
+    this._graph.destroy();
+  }
+
   center() {
     this._graph.center();
   }
@@ -70,7 +74,8 @@ export class GraphComponent implements OnInit, OnDestroy {
     this._graph.fit();
   }
 
-  ngOnDestroy() {
-    this._graph.destroy();
+  highlight(name: string) {
+    this._graph.nodes().removeClass('highlight');
+    this._graph.nodes(`[name = "${name}"]`).addClass('highlight');
   }
 }

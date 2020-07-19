@@ -5,13 +5,17 @@ node {
   text-valign: center;
   font-size: 5pt;
   background-color: #008b6e;
-  border-color: #62efcd;
 }
 
 node[weight] {
   background-color: mapData(weight, 0, 100, blue, red);
   height: data(weight);
   width: data(weight);
+}
+
+node.highlight {
+  border-width: 1px;
+  border-color: #62efcd;
 }
 
 :parent {

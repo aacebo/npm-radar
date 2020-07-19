@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { INpmPackage } from '../../screens/package';
@@ -13,6 +13,8 @@ import { INpmPackage } from '../../screens/package';
 })
 export class PackageListComponent {
   @Input() packages: INpmPackage[] = [];
+
+  @Output() packageSelect = new EventEmitter<INpmPackage>();
 
   get filtered() {
     return this.packages.filter(p => !this.control?.value || p.name.includes(this.control?.value));
