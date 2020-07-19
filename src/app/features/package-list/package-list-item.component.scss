@@ -12,6 +12,10 @@
     }
   }
 
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--hairline-strong-a15);
+  }
+
   .nrr-package-list-item--header {
     display: flex;
     flex-direction: column;

@@ -1,9 +1,8 @@
 node {
-  /* background-color: #2B65EC; */
   color: #fff;
   content: data(id);
   text-valign: center;
-  font-size: 5pt;
+  font-size: data(fontSize);
   background-color: #008b6e;
 }
 
@@ -14,8 +13,7 @@ node[weight] {
 }
 
 node.highlight {
-  border-width: 1px;
-  border-color: #62efcd;
+  background-color: #62efcd;
 }
 
 :parent {
@@ -30,8 +28,4 @@ edge {
   curve-style: bezier;
   target-arrow-shape: triangle-backcurve;
   arrow-scale: 0.5;
-}
-
-edge:selected {
-  line-color: #F08080;
 }

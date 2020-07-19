@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation, ChangeDetectionStrategy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { withLatestFrom, distinctUntilChanged } from 'rxjs/operators';
+import { withLatestFrom } from 'rxjs/operators';
 
 import { GraphComponent, INodeData } from '../../features/graph';
 
@@ -37,7 +37,6 @@ export class PackageComponent implements OnInit {
 
   ngOnInit() {
     this._route.paramMap.pipe(
-      distinctUntilChanged(),
       withLatestFrom(this._route.queryParamMap),
     ).subscribe(([paramMap, queryParamMap]) => {
       const name = paramMap.get('name');

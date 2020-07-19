@@ -3,4 +3,5 @@ export interface INodeData {
   readonly name: string;
   readonly version: string;
   readonly weight: number;
+  readonly fontSize: number;
 }

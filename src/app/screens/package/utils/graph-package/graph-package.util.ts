@@ -1,23 +1,30 @@
 import { environment } from '../../../../../environments/environment';
 
 import { INpmPackageVersion, INpmPackage } from '../../models';
-import { parseVersion } from '../parse-version/parse-version.util';
 
-export function graphPackage(pkg: INpmPackageVersion, pkgs: { [name: string]: INpmPackage }) {
+import { parseVersion } from '../parse-version/parse-version.util';
+import { normalizeWeight } from '../normalize-weight/normalize-weight.util';
+
+export function graphPackage(
+  pkg: INpmPackageVersion,
+  pkgs: { [name: string]: INpmPackage },
+  max: number,
+) {
   let edges: cytoscape.ElementDefinition[] = [];
 
   if (pkg) {
     const deps = Object.keys(pkg.dependencies || { });
+    const weight = normalizeWeight(Math.sqrt(pkg.dist.unpackedSize || 1000), Math.sqrt(max), 0) * 100;
 
     edges.push({
       group: 'nodes',
-      classes: 'root',
       selectable: true,
       data: {
         id: pkg._id,
         name: pkg.name,
         version: pkg.version,
-        weight: deps.length ? (deps.length * 5) + 5 : 5,
+        weight,
+        fontSize: weight / 10,
       },
     });
 
@@ -39,7 +46,7 @@ export function graphPackage(pkg: INpmPackageVersion, pkgs: { [name: string]: IN
 
           edges = [
             ...edges,
-            ...graphPackage(child, pkgs),
+            ...graphPackage(child, pkgs, max),
           ];
         }
       } else if (!environment.production) {
