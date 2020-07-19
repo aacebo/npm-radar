@@ -18,6 +18,7 @@ export class PackageService {
 
   get loading$() { return this._loading$.asObservable(); }
   get elements$() { return this._elements$.asObservable(); }
+  get packages$() { return this._packages$.pipe(map(p => Object.values(p))); }
 
   constructor(private readonly _packageHttpService: PackageHttpService) { }
 

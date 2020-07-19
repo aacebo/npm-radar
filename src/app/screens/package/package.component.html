@@ -20,7 +20,9 @@
         position="end"
       >
         <ng-template nrrSidenavBody>
-          <p>testing123</p>
+          <nrr-package-list
+            [packages]="packageService.packages$ | async"
+          ></nrr-package-list>
         </ng-template>
       </nrr-sidenav>
 

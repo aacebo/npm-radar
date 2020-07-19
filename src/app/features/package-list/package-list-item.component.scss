@@ -1,0 +1,37 @@
+@import '../../../styles/utils';
+
+.nrr-package-list-item {
+  display: flex;
+  color: var(--text);
+  padding: 5px;
+  cursor: pointer;
+
+  &:hover {
+    .nrr-package-list-item--name {
+      text-decoration: underline;
+    }
+  }
+
+  .nrr-package-list-item--header {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-right: 5px;
+
+    @include nrr-ellipsis;
+
+    .nrr-package-list-item--name {
+      color: var(--text-light);
+      font-weight: 500;
+      margin-bottom: 5px;
+
+      @include nrr-ellipsis;
+    }
+
+    .nrr-package-list-item--description {
+      font-size: 10pt;
+
+      @include nrr-ellipsis;
+    }
+  }
+}

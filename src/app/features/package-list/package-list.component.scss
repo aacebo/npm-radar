@@ -1,0 +1,14 @@
+.nrr-package-list {
+  display: flex;
+  flex-direction: column;
+  min-height: 1px;
+  max-height: 100%;
+
+  .nrr-form-field {
+    width: 100%;
+  }
+
+  .nrr-package-list--packages {
+    overflow-y: auto;
+  }
+}
