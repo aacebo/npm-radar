@@ -4,6 +4,7 @@ import { INpmPackageVersion, INpmPackage } from '../../models';
 
 import { parseVersion } from '../parse-version/parse-version.util';
 import { normalizeWeight } from '../normalize-weight/normalize-weight.util';
+import { bytesToString } from '../bytes-to-string/bytes-to-string.util';
 
 export function graphPackage(
   pkg: INpmPackageVersion,
@@ -23,7 +24,9 @@ export function graphPackage(
         id: pkg._id,
         name: pkg.name,
         version: pkg.version,
+        content: `${pkg._id}\n${bytesToString(pkg.dist.unpackedSize || 0)}`,
         weight,
+        size: (pkg.dist.unpackedSize || 0) / 1024,
         fontSize: weight / 10,
       },
     });

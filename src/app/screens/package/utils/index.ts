@@ -3,3 +3,4 @@ export * from './map-package/map-package.util';
 export * from './map-package-versions/map-package-versions.util';
 export * from './graph-package/graph-package.util';
 export * from './normalize-weight/normalize-weight.util';
+export * from './bytes-to-string/bytes-to-string.util';

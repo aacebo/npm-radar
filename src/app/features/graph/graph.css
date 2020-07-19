@@ -1,15 +1,19 @@
 node {
   color: #fff;
-  content: data(id);
+  label: data(content);
+  text-wrap: wrap;
   text-valign: center;
   font-size: data(fontSize);
   background-color: #008b6e;
 }
 
 node[weight] {
-  background-color: mapData(weight, 0, 100, blue, red);
   height: data(weight);
   width: data(weight);
+}
+
+node[size] {
+  background-color: mapData(size, 0, 5120, blue, red);
 }
 
 node.highlight {
