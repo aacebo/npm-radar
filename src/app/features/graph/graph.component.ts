@@ -58,8 +58,6 @@ export class GraphComponent implements OnInit, OnDestroy {
     this._graph.on('select', e => {
       this.nodeSelect.emit(e.target._private.data);
     });
-
-    this._graph.center().fit();
   }
 
   ngOnDestroy() {
@@ -67,11 +65,7 @@ export class GraphComponent implements OnInit, OnDestroy {
   }
 
   center() {
-    this._graph.center();
-  }
-
-  fit() {
-    this._graph.fit();
+    this._graph.center().fit();
   }
 
   highlight(name: string) {

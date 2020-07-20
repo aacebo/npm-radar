@@ -37,6 +37,8 @@ export function graphPackage(
         const child = pkgs[name].versions[parseVersion(version)];
 
         if (child) {
+          const childWeight = normalizeWeight(Math.sqrt(child.dist.unpackedSize || 1000), Math.sqrt(max), 0) * 100;
+
           edges.push({
             group: 'edges',
             selectable: false,
@@ -44,6 +46,8 @@ export function graphPackage(
               id: `${pkg._id} -> ${child._id}`,
               source: pkg._id,
               target: child._id,
+              size: (child.dist.unpackedSize || 0) / 1024,
+              weight: childWeight,
             },
           });
 

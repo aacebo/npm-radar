@@ -3,8 +3,11 @@ node {
   label: data(content);
   text-wrap: wrap;
   text-valign: center;
-  font-size: data(fontSize);
   background-color: #008b6e;
+}
+
+node[fontSize] {
+  font-size: data(fontSize);
 }
 
 node[weight] {
@@ -13,7 +16,7 @@ node[weight] {
 }
 
 node[size] {
-  background-color: mapData(size, 0, 5120, blue, red);
+  background-color: mapData(size, 0, 1024, blue, red);
 }
 
 node.highlight {
@@ -26,10 +29,15 @@ node.highlight {
 }
 
 edge {
-  width: 1px;
+  width: 0.5px;
   line-color: #62efcd;
   target-arrow-color: #62efcd;
   curve-style: bezier;
-  target-arrow-shape: triangle-backcurve;
+  target-arrow-shape: triangle;
   arrow-scale: 0.5;
+}
+
+edge[size] {
+  line-color: mapData(size, 0, 1024, #62efcd, red);
+  target-arrow-color: mapData(size, 0, 1024, #62efcd, red);
 }

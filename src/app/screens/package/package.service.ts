@@ -12,7 +12,7 @@ import { PackageHttpService } from './package-http.service';
 export class PackageService {
   private readonly _active$ = new BehaviorSubject<string>(undefined);
   private readonly _version$ = new BehaviorSubject<string>(undefined);
-  private readonly _elements$ = new BehaviorSubject<cytoscape.ElementDefinition[]>([]);
+  private readonly _elements$ = new BehaviorSubject<cytoscape.ElementDefinition[]>([ ]);
   private readonly _packages$ = new BehaviorSubject<{ [name: string]: INpmPackage }>({ });
   private readonly _loading$ = new BehaviorSubject(false);
   private _max = 0;

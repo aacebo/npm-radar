@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 import cytoscape from 'cytoscape';
 import fcose from 'cytoscape-fcose';
-import noOverlap from 'cytoscape-no-overlap';
 
 import { ProgressModule } from './ui/progress';
 
@@ -13,7 +12,6 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 cytoscape.use(fcose);
-cytoscape.use(noOverlap);
 
 @NgModule({
   declarations: [AppComponent],
