@@ -1,5 +1,5 @@
-import { Optional, Input, ElementRef, ChangeDetectorRef, OnInit, Directive } from '@angular/core';
-import { FormGroupDirective, ControlValueAccessor, FormControlName } from '@angular/forms';
+import { Optional, Input, ElementRef, ChangeDetectorRef, Directive } from '@angular/core';
+import { FormGroupDirective, ControlValueAccessor } from '@angular/forms';
 import { coerceBooleanProperty, coerceNumberProperty } from '@angular/cdk/coercion';
 
 import { FormFieldComponent } from './form-field.component';
@@ -7,7 +7,7 @@ import { FormFieldComponent } from './form-field.component';
 let nextId = 0;
 
 @Directive()
-export class FormFieldControlBase<T> implements ControlValueAccessor, OnInit {
+export class FormFieldControlBase<T> implements ControlValueAccessor {
   @Input() id = `nrr-form-field--${++nextId}`;
   @Input() placeholder?: string;
 
@@ -71,12 +71,7 @@ export class FormFieldControlBase<T> implements ControlValueAccessor, OnInit {
     readonly cdr: ChangeDetectorRef,
     @Optional() readonly nrrFormField: FormFieldComponent,
     @Optional() readonly formGroup: FormGroupDirective,
-    @Optional() readonly formControlName: FormControlName,
   ) { }
-
-  ngOnInit() {
-    this.nrrFormField.formControlName = this.formControlName;
-  }
 
   writeValue(v: T) {
     if (v !== this.value) {

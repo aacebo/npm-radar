@@ -36,6 +36,8 @@
           >
             <ng-template nrrSidenavBody>
               <nrr-settings
+                [settings]="settingsService.settings$ | async"
+                (settingsChange)="onSettingsChange($event)"
               ></nrr-settings>
             </ng-template>
           </nrr-sidenav>

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, forkJoin } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
+import { SettingsService } from '../../features/settings';
+
 import { INpmPackage } from './models';
 import { parseVersion, mapPackage, graphPackage } from './utils';
 import { PackageHttpService } from './package-http.service';
@@ -15,14 +17,16 @@ export class PackageService {
   private readonly _elements$ = new BehaviorSubject<cytoscape.ElementDefinition[]>([ ]);
   private readonly _packages$ = new BehaviorSubject<{ [name: string]: INpmPackage }>({ });
   private readonly _loading$ = new BehaviorSubject(false);
-  private readonly _weightBySize$ = new BehaviorSubject(true);
   private _max = 0;
 
   get loading$() { return this._loading$.asObservable(); }
   get elements$() { return this._elements$.asObservable(); }
   get packages$() { return this._packages$.pipe(map(p => Object.values(p))); }
 
-  constructor(private readonly _packageHttpService: PackageHttpService) { }
+  constructor(
+    private readonly _settingsService: SettingsService,
+    private readonly _packageHttpService: PackageHttpService,
+  ) { }
 
   findOne(name: string, version?: string) {
     this._active$.next(name);
@@ -46,13 +50,13 @@ export class PackageService {
 
         if (Object.keys(dependencies).length) {
           this._find(dependencies).subscribe(pkgs => {
-              this._onComplete(name, v, this._weightBySize$.value, {
+              this._onComplete(name, v, this._settingsService.get('weightBySize'), {
                 [pkg.name]: mapPackage(pkg),
                 ...pkgs,
               });
           });
         } else {
-          this._onComplete(name, v, this._weightBySize$.value, { [pkg.name]: mapPackage(pkg) });
+          this._onComplete(name, v, this._settingsService.get('weightBySize'), { [pkg.name]: mapPackage(pkg) });
         }
 
         return pkg;

@@ -1,0 +1,13 @@
+@mixin nrr-slide-toggle-color($color) {
+  &.#{ $color } {
+    .nrr-slide-toggle--checkbox {
+      &:checked + .nrr-slide-toggle--slider {
+        background-color: var(--#{ $color });
+
+        &:before {
+          background-color: var(--#{ $color });
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+<label class="nrr-slide-toggle--switch" [for]="id">
+  <input
+    class="nrr-slide-toggle--checkbox"
+    type="checkbox"
+    [id]="id"
+    [(ngModel)]="value"
+    [disabled]="disabled"
+  />
+  <div class="nrr-slide-toggle--slider"></div>
+</label>
+
+<label class="nrr-slide-toggle--label" [for]="id">
+  <ng-content></ng-content>
+</label>

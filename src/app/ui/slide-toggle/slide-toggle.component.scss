@@ -1,0 +1,68 @@
+@import '../../../styles/box-shadow';
+@import '../../../styles/animations';
+
+@import './slide-toggle';
+
+.nrr-slide-toggle {
+  display: inline-flex;
+  cursor: pointer;
+
+  @include nrr-slide-toggle-color(primary);
+  @include nrr-slide-toggle-color(warn);
+  @include nrr-slide-toggle-color(danger);
+
+  &.disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+
+    * {
+      cursor: not-allowed !important;
+    }
+  }
+
+  .nrr-slide-toggle--label {
+    margin: auto 0 auto 5px;
+    text-align: center;
+    user-select: none;
+    cursor: pointer;
+  }
+
+  .nrr-slide-toggle--switch {
+    position: relative;
+    width: 40px;
+    height: 12px;
+    margin: 2px 0 0 0;
+    transition: all $nrr-animation-duration $nrr-animation-timing-function;
+
+    .nrr-slide-toggle--checkbox {
+      display: none;
+
+      &:checked + .nrr-slide-toggle--slider {
+        &:before {
+          transform: translateX(18px);
+        }
+      }
+    }
+
+    .nrr-slide-toggle--slider {
+      height: 100%;
+      cursor: pointer;
+      background-color: var(--grey);
+      transition: 0.4s;
+      border-radius: 34px;
+
+      &:before {
+        position: absolute;
+        box-shadow: $nrr-shadow-4dp;
+        content: '';
+        height: 22px;
+        width: 22px;
+        bottom: -5px;
+        background-color: var(--grey);
+        transition: 0.4s;
+        border-radius: 50%;
+        transition: all $nrr-animation-duration $nrr-animation-timing-function;
+      }
+    }
+  }
+}

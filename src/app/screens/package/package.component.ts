@@ -3,12 +3,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { withLatestFrom } from 'rxjs/operators';
 
 import { GraphComponent, INodeData } from '../../features/graph';
+import { SettingsService } from '../../features/settings';
 
 import { SearchService } from '../search';
 
 import { PackageService } from './package.service';
 import { IMenus } from './menus.interface';
 import { INpmPackage } from './models';
+import { ISettings } from '../../features/settings/settings.interface';
 
 @Component({
   selector: 'nrr-package',
@@ -32,6 +34,7 @@ export class PackageComponent implements OnInit {
   constructor(
     readonly searchService: SearchService,
     readonly packageService: PackageService,
+    readonly settingsService: SettingsService,
     private readonly _route: ActivatedRoute,
     private readonly _router: Router,
   ) { }
@@ -63,5 +66,9 @@ export class PackageComponent implements OnInit {
   onPackageSelect(e: INpmPackage) {
     this._graph?.highlight(e.name);
     this.menus.menu = false;
+  }
+
+  onSettingsChange(e: ISettings) {
+    console.log(e);
   }
 }
