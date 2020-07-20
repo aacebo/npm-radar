@@ -26,6 +26,7 @@ export class PackageComponent implements OnInit {
   readonly menus: IMenus = {
     search: false,
     menu: false,
+    settings: false,
   };
 
   constructor(

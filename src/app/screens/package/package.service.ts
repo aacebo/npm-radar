@@ -15,6 +15,7 @@ export class PackageService {
   private readonly _elements$ = new BehaviorSubject<cytoscape.ElementDefinition[]>([ ]);
   private readonly _packages$ = new BehaviorSubject<{ [name: string]: INpmPackage }>({ });
   private readonly _loading$ = new BehaviorSubject(false);
+  private readonly _weightBySize$ = new BehaviorSubject(true);
   private _max = 0;
 
   get loading$() { return this._loading$.asObservable(); }
@@ -45,13 +46,13 @@ export class PackageService {
 
         if (Object.keys(dependencies).length) {
           this._find(dependencies).subscribe(pkgs => {
-              this._onComplete(name, v, {
+              this._onComplete(name, v, this._weightBySize$.value, {
                 [pkg.name]: mapPackage(pkg),
                 ...pkgs,
               });
           });
         } else {
-          this._onComplete(name, v, { [pkg.name]: mapPackage(pkg) });
+          this._onComplete(name, v, this._weightBySize$.value, { [pkg.name]: mapPackage(pkg) });
         }
 
         return pkg;
@@ -98,9 +99,9 @@ export class PackageService {
     return find(deps);
   }
 
-  private _onComplete(name: string, version: string, pkgs: { [name: string]: INpmPackage }) {
+  private _onComplete(name: string, version: string, weightBySize: boolean, pkgs: { [name: string]: INpmPackage }) {
     this._packages$.next(pkgs);
-    this._elements$.next(graphPackage(pkgs[name]?.versions[version], pkgs, this._max));
+    this._elements$.next(graphPackage(pkgs[name]?.versions[version], pkgs, this._max, weightBySize));
     this._loading$.next(false);
   }
 }

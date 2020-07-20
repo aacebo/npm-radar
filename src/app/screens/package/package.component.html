@@ -28,41 +28,64 @@
       </nrr-sidenav>
 
       <nrr-sidenav-content>
-        <button
-          class="search-btn"
-          nrr-icon-button
-          [nrrBadge]="(searchService.results$ | async).length"
-          [nrrBadgeDisabled]="!(searchService.results$ | async).length"
-          (click)="toggle('search')"
-        >
-          <nrr-icon name="search"></nrr-icon>
-        </button>
+        <nrr-sidenav-container>
+          <nrr-sidenav
+            [(open)]="menus.settings"
+            mode="over"
+            position="end"
+          >
+            <ng-template nrrSidenavBody>
+              <nrr-settings
+              ></nrr-settings>
+            </ng-template>
+          </nrr-sidenav>
 
-        <button
-          class="menu-btn"
-          nrr-icon-button
-          [nrrBadge]="(packageService.packages$ | async).length"
-          [nrrBadgeDisabled]="!(packageService.packages$ | async).length"
-          nrrBadgePosition="top left"
-          (click)="toggle('menu')"
-        >
-          <nrr-icon name="menu"></nrr-icon>
-        </button>
+          <nrr-sidenav-content>
+            <button
+              class="search-btn"
+              nrr-icon-button
+              [nrrBadge]="(searchService.results$ | async).length"
+              [nrrBadgeDisabled]="!(searchService.results$ | async).length"
+              (click)="toggle('search')"
+            >
+              <nrr-icon name="search"></nrr-icon>
+            </button>
 
-        <button
-          class="center-btn"
-          nrr-icon-button
-          (click)="center()"
-        >
-          <nrr-icon name="crosshair"></nrr-icon>
-        </button>
+            <button
+              class="menu-btn"
+              nrr-icon-button
+              [nrrBadge]="(packageService.packages$ | async).length"
+              [nrrBadgeDisabled]="!(packageService.packages$ | async).length"
+              nrrBadgePosition="top left"
+              (click)="toggle('menu')"
+            >
+              <nrr-icon name="menu"></nrr-icon>
+            </button>
 
-        <nrr-graph
-          *ngIf="!(packageService.loading$ | async) && !!(packageService.elements$ | async)"
-          [elements]="packageService.elements$ | async"
-          [(zoom)]="zoom"
-          (nodeSelect)="onNodeSelect($event)"
-        ></nrr-graph>
+            <button
+              class="center-btn"
+              nrr-icon-button
+              (click)="center()"
+            >
+              <nrr-icon name="crosshair"></nrr-icon>
+            </button>
+
+            <button
+              class="settings-btn"
+              nrr-icon-button
+              (click)="toggle('settings')"
+            >
+              <nrr-icon name="settings"></nrr-icon>
+            </button>
+
+            <nrr-graph
+              *ngIf="!(packageService.loading$ | async) && !!(packageService.elements$ | async)"
+              [elements]="packageService.elements$ | async"
+              [(zoom)]="zoom"
+              (nodeSelect)="onNodeSelect($event)"
+            ></nrr-graph>
+          </nrr-sidenav-content>
+        </nrr-sidenav-container>
       </nrr-sidenav-content>
     </nrr-sidenav-container>
   </nrr-sidenav-content>

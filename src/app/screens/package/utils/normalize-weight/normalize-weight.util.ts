@@ -1,3 +1,7 @@
 export function normalizeWeight(v: number, max: number, min: number) {
-  return (v - min) / (max - min);
+  if (v <= max) {
+    return (v - min) / (max - min);
+  }
+
+  return 1;
 }

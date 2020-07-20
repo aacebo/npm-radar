@@ -29,9 +29,15 @@
         bottom: 10px;
       }
 
+      .settings-btn {
+        right: 10px;
+        bottom: 56px;
+      }
+
       .search-btn,
       .menu-btn,
-      .center-btn {
+      .center-btn,
+      .settings-btn {
         position: absolute !important;
         z-index: 3;
 

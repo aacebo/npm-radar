@@ -10,12 +10,14 @@ export function graphPackage(
   pkg: INpmPackageVersion,
   pkgs: { [name: string]: INpmPackage },
   max: number,
+  weightBySize: boolean,
 ) {
   let edges: cytoscape.ElementDefinition[] = [];
 
   if (pkg) {
     const deps = Object.keys(pkg.dependencies || { });
-    const weight = normalizeWeight(Math.sqrt(pkg.dist.unpackedSize || 1000), Math.sqrt(max), 0) * 100;
+    const weight = weightBySize ? normalizeWeight(Math.sqrt(pkg.dist.unpackedSize || 1000), Math.sqrt(max), 0) * 100
+                                : (deps.length || 1) * 5;
 
     edges.push({
       group: 'nodes',
@@ -24,10 +26,11 @@ export function graphPackage(
         id: pkg._id,
         name: pkg.name,
         version: pkg.version,
-        content: `${pkg._id}\n${bytesToString(pkg.dist.unpackedSize || 0)}`,
+        content: `${pkg._id}\n${pkg.dist.unpackedSize ? bytesToString(pkg.dist.unpackedSize) : '??'}`,
         weight,
-        size: (pkg.dist.unpackedSize || 0) / 1024,
         fontSize: weight / 10,
+        size: weightBySize ? (pkg.dist.unpackedSize || 0) / 1024 : undefined,
+        outgoingEdges: !weightBySize ? deps.length : undefined,
       },
     });
 
@@ -37,7 +40,8 @@ export function graphPackage(
         const child = pkgs[name].versions[parseVersion(version)];
 
         if (child) {
-          const childWeight = normalizeWeight(Math.sqrt(child.dist.unpackedSize || 1000), Math.sqrt(max), 0) * 100;
+          const childWeight = weightBySize ? normalizeWeight(Math.sqrt(child.dist.unpackedSize || 1000), Math.sqrt(max), 0) * 100
+                                           : (Object.keys(child.dependencies || { }).length || 1) * 5;
 
           edges.push({
             group: 'edges',
@@ -46,14 +50,15 @@ export function graphPackage(
               id: `${pkg._id} -> ${child._id}`,
               source: pkg._id,
               target: child._id,
-              size: (child.dist.unpackedSize || 0) / 1024,
               weight: childWeight,
+              size: weightBySize ? (child.dist.unpackedSize || 0) / 1024 : undefined,
+              outgoingEdges: !weightBySize ? deps.length : undefined,
             },
           });
 
           edges = [
             ...edges,
-            ...graphPackage(child, pkgs, max),
+            ...graphPackage(child, pkgs, max, weightBySize),
           ];
         }
       } else if (!environment.production) {
