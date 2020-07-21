@@ -15,7 +15,18 @@ import css from './graph.css';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GraphComponent implements OnInit, OnDestroy {
-  @Input() elements: cytoscape.ElementDefinition[] = [];
+  @Input()
+  get elements() { return this._elements; }
+  set elements(v) {
+    this._elements = v;
+
+    if (this._graph) {
+      this._graph.nodes().remove();
+      this._graph.add(v);
+      this._graph.layout(GRAPH_LAYOUT).run();
+    }
+  }
+  private _elements: cytoscape.ElementDefinition[] = [];
 
   @Input()
   get zoom() { return this._zoom; }

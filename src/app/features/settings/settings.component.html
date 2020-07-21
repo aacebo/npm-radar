@@ -1,8 +1,10 @@
+<h2>Settings</h2>
+
 <div
   class="nrr-settings--form"
   [formGroup]="form"
 >
-  <nrr-slide-toggle
-    formControlName="weightBySize"
-  ></nrr-slide-toggle>
+  <nrr-slide-toggle formControlName="weightBySize">
+    {{ form.value.weightBySize ? 'Weight By Size' : 'Weight By Dependencies' }}
+  </nrr-slide-toggle>
 </div>

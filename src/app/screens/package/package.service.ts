@@ -28,6 +28,11 @@ export class PackageService {
     private readonly _packageHttpService: PackageHttpService,
   ) { }
 
+  render() {
+    const pkgs = this._packages$.value;
+    this._elements$.next(graphPackage(pkgs[this._active$.value]?.versions[this._version$.value], pkgs, this._max, this._settingsService.get('weightBySize')));
+  }
+
   findOne(name: string, version?: string) {
     this._active$.next(name);
     this._loading$.next(true);
@@ -50,13 +55,13 @@ export class PackageService {
 
         if (Object.keys(dependencies).length) {
           this._find(dependencies).subscribe(pkgs => {
-              this._onComplete(name, v, this._settingsService.get('weightBySize'), {
+              this._onComplete({
                 [pkg.name]: mapPackage(pkg),
                 ...pkgs,
               });
           });
         } else {
-          this._onComplete(name, v, this._settingsService.get('weightBySize'), { [pkg.name]: mapPackage(pkg) });
+          this._onComplete({ [pkg.name]: mapPackage(pkg) });
         }
 
         return pkg;
@@ -103,9 +108,9 @@ export class PackageService {
     return find(deps);
   }
 
-  private _onComplete(name: string, version: string, weightBySize: boolean, pkgs: { [name: string]: INpmPackage }) {
+  private _onComplete(pkgs: { [name: string]: INpmPackage }) {
     this._packages$.next(pkgs);
-    this._elements$.next(graphPackage(pkgs[name]?.versions[version], pkgs, this._max, weightBySize));
     this._loading$.next(false);
+    this.render();
   }
 }

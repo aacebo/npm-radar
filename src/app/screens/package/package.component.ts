@@ -69,6 +69,7 @@ export class PackageComponent implements OnInit {
   }
 
   onSettingsChange(e: ISettings) {
-    console.log(e);
+    this.settingsService.next(e);
+    this.packageService.render();
   }
 }

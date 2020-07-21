@@ -47,7 +47,7 @@
     .nrr-slide-toggle--slider {
       height: 100%;
       cursor: pointer;
-      background-color: var(--grey);
+      background-color: var(--bg-light);
       transition: 0.4s;
       border-radius: 34px;
 
@@ -58,7 +58,7 @@
         height: 22px;
         width: 22px;
         bottom: -5px;
-        background-color: var(--grey);
+        background-color: var(--bg-light);
         transition: 0.4s;
         border-radius: 50%;
         transition: all $nrr-animation-duration $nrr-animation-timing-function;

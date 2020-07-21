@@ -6,9 +6,12 @@
     flex: 1;
 
     .nrr-sidenav {
-      width: 80%;
-      max-width: 300px;
       padding: 5px;
+
+      &.nrr-search-sidenav {
+        width: 80%;
+        max-width: 300px;
+      }
     }
 
     .nrr-sidenav-content {
