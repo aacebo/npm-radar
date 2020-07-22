@@ -83,8 +83,8 @@
             </button>
 
             <nrr-graph
-              *ngIf="!(packageService.loading$ | async) && !!(packageService.elements$ | async)"
-              [elements]="packageService.elements$ | async"
+              *ngIf="!(packageService.loading$ | async) && !!(graphService.elements$ | async)"
+              [elements]="graphService.elements$ | async"
               [(zoom)]="zoom"
               (nodeSelect)="onNodeSelect($event)"
             ></nrr-graph>

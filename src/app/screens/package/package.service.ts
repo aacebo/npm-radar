@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, forkJoin } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
-import { SettingsService } from '../../features/settings';
-import { graphPackage, parseVersion } from '../../features/graph';
+import { parseVersion, GraphService } from '../../features/graph';
 
 import { INpmPackage } from './models';
 import { mapPackage } from './utils';
@@ -15,23 +14,20 @@ import { PackageHttpService } from './package-http.service';
 export class PackageService {
   private readonly _name$ = new BehaviorSubject<string>(undefined);
   private readonly _version$ = new BehaviorSubject<string>(undefined);
-  private readonly _elements$ = new BehaviorSubject<cytoscape.ElementDefinition[]>([ ]);
   private readonly _packages$ = new BehaviorSubject<{ [name: string]: INpmPackage }>({ });
   private readonly _loading$ = new BehaviorSubject(false);
   private _max = 0;
 
   get loading$() { return this._loading$.asObservable(); }
-  get elements$() { return this._elements$.asObservable(); }
   get packages$() { return this._packages$.pipe(map(p => Object.values(p))); }
 
   constructor(
-    private readonly _settingsService: SettingsService,
+    private readonly _graphService: GraphService,
     private readonly _packageHttpService: PackageHttpService,
   ) { }
 
   render() {
-    const pkgs = this._packages$.value;
-    this._elements$.next(graphPackage(pkgs[this._name$.value]?.versions[this._version$.value], pkgs, this._max, this._settingsService.get('weightBySize')));
+    this._graphService.set(this._name$.value, this._version$.value, this._max, this._packages$.value);
   }
 
   findOne(name: string, version?: string) {
