@@ -1,10 +1,7 @@
 import { environment } from '../../../environments/environment';
 
 import { INpmPackageVersion, INpmPackage } from '../../screens/package';
-
-import { parseVersion } from './parse-version.util';
-import { normalizeWeight } from './normalize-weight.util';
-import { bytesToString } from './bytes-to-string.util';
+import { bytesToString, parseVersion, normalizeWeight } from '../../core/utils';
 
 export function graphPackage(
   pkg: INpmPackageVersion,

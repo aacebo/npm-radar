@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, forkJoin } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
-import { parseVersion, GraphService } from '../../features/graph';
+import { parseVersion } from '../../core/utils';
+import { GraphService } from '../../features/graph';
 
 import { INpmPackage } from './models';
 import { mapPackage } from './utils';
