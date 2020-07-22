@@ -13,7 +13,7 @@ import { PackageHttpService } from './package-http.service';
   providedIn: 'root',
 })
 export class PackageService {
-  private readonly _active$ = new BehaviorSubject<string>(undefined);
+  private readonly _name$ = new BehaviorSubject<string>(undefined);
   private readonly _version$ = new BehaviorSubject<string>(undefined);
   private readonly _elements$ = new BehaviorSubject<cytoscape.ElementDefinition[]>([ ]);
   private readonly _packages$ = new BehaviorSubject<{ [name: string]: INpmPackage }>({ });
@@ -31,14 +31,12 @@ export class PackageService {
 
   render() {
     const pkgs = this._packages$.value;
-    this._elements$.next(graphPackage(pkgs[this._active$.value]?.versions[this._version$.value], pkgs, this._max, this._settingsService.get('weightBySize')));
+    this._elements$.next(graphPackage(pkgs[this._name$.value]?.versions[this._version$.value], pkgs, this._max, this._settingsService.get('weightBySize')));
   }
 
   findOne(name: string, version?: string) {
-    this._active$.next(name);
+    this._name$.next(name);
     this._loading$.next(true);
-    this._packages$.next({ });
-    this._elements$.next([ ]);
     this._max = 0;
 
     return this._packageHttpService.findOne(name).pipe(
@@ -110,7 +108,11 @@ export class PackageService {
   }
 
   private _onComplete(pkgs: { [name: string]: INpmPackage }) {
-    this._packages$.next(pkgs);
+    this._packages$.next({
+      ...this._packages$.value,
+      ...pkgs,
+    });
+
     this._loading$.next(false);
     this.render();
   }
