@@ -3,9 +3,10 @@ import { BehaviorSubject, forkJoin } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
 import { SettingsService } from '../../features/settings';
+import { graphPackage, parseVersion } from '../../features/graph';
 
 import { INpmPackage } from './models';
-import { parseVersion, mapPackage, graphPackage } from './utils';
+import { mapPackage } from './utils';
 import { PackageHttpService } from './package-http.service';
 
 @Injectable({

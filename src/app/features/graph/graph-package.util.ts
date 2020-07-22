@@ -1,10 +1,10 @@
-import { environment } from '../../../../../environments/environment';
+import { environment } from '../../../environments/environment';
 
-import { INpmPackageVersion, INpmPackage } from '../../models';
+import { INpmPackageVersion, INpmPackage } from '../../screens/package';
 
-import { parseVersion } from '../parse-version/parse-version.util';
-import { normalizeWeight } from '../normalize-weight/normalize-weight.util';
-import { bytesToString } from '../bytes-to-string/bytes-to-string.util';
+import { parseVersion } from './parse-version.util';
+import { normalizeWeight } from './normalize-weight.util';
+import { bytesToString } from './bytes-to-string.util';
 
 export function graphPackage(
   pkg: INpmPackageVersion,
