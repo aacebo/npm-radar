@@ -62,6 +62,11 @@ export class PackageComponent implements OnInit {
     this._graph?.center();
   }
 
+  download() {
+    const png = this._graph?.export();
+    location.href = `data:application/octet-stream;base64,${png}`;
+  }
+
   onNodeSelect(e: INodeData) {
     this._router.navigateByUrl(`${encodeURIComponent(e.name)}?v=${e.version}`);
   }

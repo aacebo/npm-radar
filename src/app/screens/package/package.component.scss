@@ -37,10 +37,16 @@
         bottom: 56px;
       }
 
+      .download-btn {
+        right: 10px;
+        bottom: 102px;
+      }
+
       .search-btn,
       .menu-btn,
       .center-btn,
-      .settings-btn {
+      .settings-btn,
+      .download-btn {
         position: absolute !important;
         z-index: 3;
 

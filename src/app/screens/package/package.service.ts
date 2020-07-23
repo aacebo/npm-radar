@@ -26,6 +26,7 @@ export class PackageService {
 
   findOne(name: string, version?: string) {
     this._name$.next(name);
+    this._packages$.next({ });
     this._graphService.reset();
 
     return this._packageHttpService.findOne(name).pipe(

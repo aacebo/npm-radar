@@ -83,6 +83,14 @@
               <nrr-icon name="settings"></nrr-icon>
             </button>
 
+            <button
+              class="download-btn"
+              nrr-icon-button
+              (click)="download()"
+            >
+              <nrr-icon name="download"></nrr-icon>
+            </button>
+
             <nrr-graph
               [(zoom)]="zoom"
               [elements]="graphService.elements$ | async"

@@ -93,6 +93,10 @@ export class GraphComponent implements OnInit, OnDestroy {
     this._graph.elements().remove();
   }
 
+  export() {
+    return this._graph.png({ output: 'base64' });
+  }
+
   goTo(id: string) {
     const node = this._graph.$id(id);
     this._graph.center(node).fit(node);
