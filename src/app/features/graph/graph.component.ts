@@ -19,14 +19,24 @@ export class GraphComponent implements OnInit, OnDestroy {
   get elements() { return this._elements; }
   set elements(v) {
     this._elements = v;
+    const values = Object.values(v || { });
 
-    if (this._graph) {
-      this._graph.nodes().remove();
-      this._graph.add(v);
-      this._graph.layout(GRAPH_LAYOUT).run();
+    if (this._graph && values.length) {
+      const elems = this._graph.add(values);
+      elems.layout({ name: 'random' }).run();
+      this._graph.center().fit();
+
+      if (this._layoutTimeout) {
+        clearTimeout(this._layoutTimeout);
+        this._layoutTimeout = undefined;
+      }
+
+      this._layoutTimeout = setTimeout(() => {
+        this._graph.layout(GRAPH_LAYOUT).run();
+      }, 500);
     }
   }
-  private _elements: cytoscape.ElementDefinition[] = [];
+  private _elements: { [id: string]: cytoscape.EdgeDefinition | cytoscape.NodeDefinition } = { };
 
   @Input()
   get zoom() { return this._zoom; }
@@ -41,14 +51,14 @@ export class GraphComponent implements OnInit, OnDestroy {
 
   private _graph: cytoscape.Core;
   private _zoomTimeout: NodeJS.Timeout;
+  private _layoutTimeout: NodeJS.Timeout;
 
   constructor(private readonly _el: ElementRef<HTMLElement>) { }
 
   ngOnInit() {
     this._graph = cytoscape({
       container: this._el.nativeElement,
-      elements: this.elements,
-      layout: GRAPH_LAYOUT,
+      elements: [],
       style: css,
       selectionType: 'single',
       zoom: this._zoom,
@@ -77,6 +87,10 @@ export class GraphComponent implements OnInit, OnDestroy {
 
   center() {
     this._graph.center().fit();
+  }
+
+  clear() {
+    this._graph.elements().remove();
   }
 
   highlight(name: string) {

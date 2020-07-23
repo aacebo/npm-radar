@@ -30,6 +30,9 @@ export class PackageComponent implements OnInit {
     settings: false,
   };
 
+  private _name: string;
+  private _version: string;
+
   constructor(
     readonly searchService: SearchService,
     readonly packageService: PackageService,
@@ -43,11 +46,12 @@ export class PackageComponent implements OnInit {
     this._route.paramMap.pipe(
       withLatestFrom(this._route.queryParamMap),
     ).subscribe(([paramMap, queryParamMap]) => {
-      const name = paramMap.get('name');
-      const v = queryParamMap.get('v');
+      this._name = paramMap.get('name');
+      this._version = queryParamMap.get('v');
       this.menus.search = false;
+      this._graph?.clear();
 
-      this.packageService.findOne(name, v).subscribe();
+      this.packageService.findOne(this._name, this._version).subscribe();
     });
   }
 
@@ -70,6 +74,7 @@ export class PackageComponent implements OnInit {
 
   onSettingsChange(e: ISettings) {
     this.settingsService.next(e);
-    this.packageService.render();
+    this._graph?.clear();
+    this.packageService.findOne(this._name, this._version).subscribe();
   }
 }
