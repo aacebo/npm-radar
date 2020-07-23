@@ -67,8 +67,8 @@ export class PackageComponent implements OnInit {
   }
 
   onListNodeSelect(e: cytoscape.NodeDefinition) {
-    console.log(e);
     this.menus.menu = false;
+    this._graph?.goTo(e.data.id);
   }
 
   onSettingsChange(e: ISettings) {

@@ -93,8 +93,8 @@ export class GraphComponent implements OnInit, OnDestroy {
     this._graph.elements().remove();
   }
 
-  highlight(name: string) {
-    this._graph.nodes().removeClass('highlight');
-    this._graph.nodes(`[name = "${name}"]`).addClass('highlight');
+  goTo(id: string) {
+    const node = this._graph.$id(id);
+    this._graph.center(node).fit(node);
   }
 }

@@ -23,10 +23,6 @@ node[outgoingEdges] {
   background-color: mapData(outgoingEdges, 0, 5, blue, red);
 }
 
-node.highlight {
-  background-color: #62efcd;
-}
-
 :parent {
   text-valign: top;
   background-opacity: 0.333;
