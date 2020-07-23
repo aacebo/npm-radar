@@ -8,7 +8,7 @@ import { BadgeModule } from '../../ui/badge';
 
 import { SearchAutocompleteModule } from '../../features/search-autocomplete';
 import { GraphModule } from '../../features/graph';
-import { PackageListModule } from '../../features/package-list';
+import { NodeListModule } from '../../features/node-list';
 import { SettingsModule } from '../../features/settings';
 
 import { PackageComponent } from './package.component';
@@ -22,7 +22,7 @@ import { PackageRoutingModule } from './package-routing.module';
 
     SearchAutocompleteModule,
     GraphModule,
-    PackageListModule,
+    NodeListModule,
     SettingsModule,
 
     IconModule,

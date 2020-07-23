@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { bytesToString, normalizeWeight, parseVersion } from '../../core/utils';
 
@@ -15,7 +16,7 @@ export class GraphService {
   get elements$() { return this._elements$.asObservable(); }
   private readonly _elements$ = new BehaviorSubject<{ [id: string]: cytoscape.EdgeDefinition | cytoscape.NodeDefinition }>({ });
 
-  get nodes$() { return this._nodes$.asObservable(); }
+  get nodes$() { return this._nodes$.pipe(map(n => Object.values(n))); }
   private get _nodes() { return this._nodes$.value; }
   private readonly _nodes$ = new BehaviorSubject<{ [id: string]: cytoscape.NodeDefinition }>({ });
 

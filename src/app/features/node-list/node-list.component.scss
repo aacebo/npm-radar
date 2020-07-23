@@ -1,4 +1,4 @@
-.nrr-package-list {
+.nrr-node-list {
   display: flex;
   flex-direction: column;
   min-height: 1px;
@@ -8,7 +8,7 @@
     width: 100%;
   }
 
-  .nrr-package-list--packages {
+  .nrr-node-list--nodes {
     overflow-y: auto;
   }
 }

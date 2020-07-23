@@ -9,7 +9,6 @@ import { SearchService } from '../search';
 
 import { PackageService } from './package.service';
 import { IMenus } from './menus.interface';
-import { INpmPackage } from './models';
 
 @Component({
   selector: 'nrr-package',
@@ -67,8 +66,8 @@ export class PackageComponent implements OnInit {
     this._router.navigateByUrl(`${encodeURIComponent(e.name)}?v=${e.version}`);
   }
 
-  onPackageSelect(e: INpmPackage) {
-    this._graph?.highlight(e.name);
+  onListNodeSelect(e: cytoscape.NodeDefinition) {
+    console.log(e);
     this.menus.menu = false;
   }
 

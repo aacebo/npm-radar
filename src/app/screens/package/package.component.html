@@ -22,10 +22,11 @@
         position="end"
       >
         <ng-template nrrSidenavBody>
-          <nrr-package-list
-            [packages]="packageService.packages$ | async"
-            (packageSelect)="onPackageSelect($event)"
-          ></nrr-package-list>
+          <nrr-node-list
+            [nodes]="graphService.nodes$ | async"
+            [weightBySize]="(settingsService.settings$ | async).weightBySize"
+            (nodeSelect)="onListNodeSelect($event)"
+          ></nrr-node-list>
         </ng-template>
       </nrr-sidenav>
 
@@ -58,8 +59,8 @@
             <button
               class="menu-btn"
               nrr-icon-button
-              [nrrBadge]="(packageService.packages$ | async).length"
-              [nrrBadgeDisabled]="!(packageService.packages$ | async).length"
+              [nrrBadge]="(graphService.nodes$ | async).length"
+              [nrrBadgeDisabled]="!(graphService.nodes$ | async).length"
               nrrBadgePosition="top left"
               (click)="toggle('menu')"
             >

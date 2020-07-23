@@ -1,0 +1,27 @@
+<nrr-form-field>
+  <input
+    nrr-input
+    autofocus
+    [formControl]="control"
+  />
+
+  <nrr-icon
+    nrrSuffix
+    name="search"
+    stroke="var(--text-light)"
+  ></nrr-icon>
+</nrr-form-field>
+
+<div
+  *ngIf="nodes.length"
+  class="nrr-node-list--nodes"
+>
+  <nrr-list-item
+    *ngFor="let node of filtered"
+    (click)="nodeSelect.emit(node)"
+  >
+    <nrr-list-item-title>{{ node.data.id }}</nrr-list-item-title>
+    <nrr-list-item-subtitle *ngIf="weightBySize">{{ node.data.size ? node.data.size.toFixed(2) : '??' }}</nrr-list-item-subtitle>
+    <nrr-list-item-subtitle *ngIf="!weightBySize">{{ node.data.outgoingEdges }} Dependencies</nrr-list-item-subtitle>
+  </nrr-list-item>
+</div>
