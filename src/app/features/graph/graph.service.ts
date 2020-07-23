@@ -15,15 +15,20 @@ export class GraphService {
   get elements$() { return this._elements$.asObservable(); }
   private readonly _elements$ = new BehaviorSubject<{ [id: string]: cytoscape.EdgeDefinition | cytoscape.NodeDefinition }>({ });
 
-  private _nodes: { [id: string]: cytoscape.NodeDefinition } = { };
-  private _edges: { [id: string]: cytoscape.EdgeDefinition } = { };
+  get nodes$() { return this._nodes$.asObservable(); }
+  private get _nodes() { return this._nodes$.value; }
+  private readonly _nodes$ = new BehaviorSubject<{ [id: string]: cytoscape.NodeDefinition }>({ });
+
+  private get _edges() { return this._edges$.value; }
+  private readonly _edges$ = new BehaviorSubject<{ [id: string]: cytoscape.EdgeDefinition }>({ });
+
   private _maxPackageSize = 0;
 
   constructor(private readonly _settingsService: SettingsService) { }
 
   reset() {
-    this._nodes = { };
-    this._edges = { };
+    this._nodes$.next({ });
+    this._edges$.next({ });
     this._maxPackageSize = 0;
   }
 
@@ -52,8 +57,8 @@ export class GraphService {
       nodes[outgoingEdges[id].data.target] = targetNode;
     }
 
-    this._nodes = { ...this._nodes, ...nodes };
-    this._edges = { ...this._edges, ...incomingEdges, ...outgoingEdges };
+    this._nodes$.next({ ...this._nodes, ...nodes });
+    this._edges$.next({ ...this._edges, ...incomingEdges, ...outgoingEdges });
 
     setTimeout(() => {
       this._elements$.next({ ...nodes, ...incomingEdges, ...outgoingEdges });

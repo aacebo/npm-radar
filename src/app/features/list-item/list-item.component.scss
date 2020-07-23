@@ -1,0 +1,23 @@
+@import '../../../styles/utils';
+
+.nrr-list-item {
+  display: flex;
+  color: var(--text);
+  padding: 5px;
+  cursor: pointer;
+
+  &:hover {
+    .nrr-list-item-title {
+      text-decoration: underline;
+    }
+  }
+
+  .nrr-list-item--header {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-right: 5px;
+
+    @include nrr-ellipsis;
+  }
+}

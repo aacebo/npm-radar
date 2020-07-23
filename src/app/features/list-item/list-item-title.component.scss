@@ -1,0 +1,9 @@
+@import '../../../styles/utils';
+
+.nrr-list-item-title {
+  color: var(--text-light);
+  font-weight: 500;
+  margin-bottom: 5px;
+
+  @include nrr-ellipsis;
+}
