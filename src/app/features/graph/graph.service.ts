@@ -144,7 +144,7 @@ export class GraphService {
         content: `${pkg._id}\n${pkg.dist.unpackedSize ? bytesToString(pkg.dist.unpackedSize) : '??'}`,
         weight,
         size: weightBySize ? (pkg.dist.unpackedSize || 0) / 1024 : undefined,
-        fontSize: weight / 10,
+        fontSize: weight / 10 > 1 ? weight / 10 : 1,
         outgoingEdges: !weightBySize ? edges : undefined,
       } as INodeData,
     };
