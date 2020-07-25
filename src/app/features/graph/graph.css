@@ -6,6 +6,12 @@ node {
   background-color: #008b6e;
 }
 
+node:selected {
+  border-width: 1px;
+  border-color: yellow;
+  color: yellow;
+}
+
 node[fontSize] {
   font-size: data(fontSize);
 }

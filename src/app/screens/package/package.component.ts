@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, ChangeDetectionStrategy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { withLatestFrom } from 'rxjs/operators';
 
 import { GraphComponent, INodeData, GraphService } from '../../features/graph';
@@ -38,7 +38,6 @@ export class PackageComponent implements OnInit {
     readonly settingsService: SettingsService,
     readonly graphService: GraphService,
     private readonly _route: ActivatedRoute,
-    private readonly _router: Router,
   ) { }
 
   ngOnInit() {
@@ -63,12 +62,14 @@ export class PackageComponent implements OnInit {
   }
 
   download() {
-    const png = this._graph?.export();
-    location.href = `data:application/octet-stream;base64,${png}`;
+    const png = this._graph?.image();
+    // location.href = `data:image/png;base64,${jpg}`;
+    window.open(`data:application/octet-stream;base64,${png}`, '_blank');
   }
 
-  onNodeSelect(e: INodeData) {
-    this._router.navigateByUrl(`${encodeURIComponent(e.name)}?v=${e.version}`);
+  onNodesSelect(e: INodeData[]) {
+    console.log(e);
+    // this._router.navigateByUrl(`${encodeURIComponent(e.name)}?v=${e.version}`);
   }
 
   onListNodeSelect(e: cytoscape.NodeDefinition) {

@@ -16,6 +16,7 @@
 
     .nrr-sidenav-content {
       display: flex;
+      flex-direction: column;
 
       .search-btn {
         top: 12px;
@@ -29,17 +30,17 @@
 
       .center-btn {
         right: 10px;
-        bottom: 10px;
+        bottom: 30px;
       }
 
       .settings-btn {
         right: 10px;
-        bottom: 56px;
+        bottom: 76px;
       }
 
       .download-btn {
         right: 10px;
-        bottom: 102px;
+        bottom: 122px;
       }
 
       .search-btn,

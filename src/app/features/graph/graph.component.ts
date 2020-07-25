@@ -41,7 +41,7 @@ export class GraphComponent implements OnInit, OnDestroy {
   private _zoom = 0.6;
 
   @Output() zoomChange = new EventEmitter<number>();
-  @Output() nodeSelect = new EventEmitter<INodeData>();
+  @Output() nodesSelect = new EventEmitter<INodeData[]>();
 
   private _graph: cytoscape.Core;
   private readonly _runLayout = debounce(() => this._graph.layout(GRAPH_LAYOUT).run(), 500);
@@ -56,15 +56,16 @@ export class GraphComponent implements OnInit, OnDestroy {
       style: css,
       selectionType: 'single',
       zoom: this._zoom,
+      boxSelectionEnabled: true,
     });
 
     this._graph.on('zoom', () => {
       this._runZoom();
     });
 
-    this._graph.on('select', e => {
-      this.nodeSelect.emit(e.target._private.data);
-    });
+    this._graph.on('select', debounce((e: cytoscape.EventObject) => {
+      this.nodesSelect.emit(e.cy.nodes(':selected').map(n => n.data()));
+    }, 500));
   }
 
   ngOnDestroy() {
@@ -79,7 +80,7 @@ export class GraphComponent implements OnInit, OnDestroy {
     this._graph.elements().remove();
   }
 
-  export() {
+  image() {
     return this._graph.png({ output: 'base64' });
   }
 

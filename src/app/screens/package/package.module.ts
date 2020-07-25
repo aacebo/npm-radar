@@ -10,6 +10,7 @@ import { SearchAutocompleteModule } from '../../features/search-autocomplete';
 import { GraphModule } from '../../features/graph';
 import { NodeListModule } from '../../features/node-list';
 import { SettingsModule } from '../../features/settings';
+import { FooterModule } from '../../features/footer';
 
 import { PackageComponent } from './package.component';
 import { PackageRoutingModule } from './package-routing.module';
@@ -24,6 +25,7 @@ import { PackageRoutingModule } from './package-routing.module';
     GraphModule,
     NodeListModule,
     SettingsModule,
+    FooterModule,
 
     IconModule,
     ButtonModule,

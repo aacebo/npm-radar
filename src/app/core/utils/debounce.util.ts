@@ -1,14 +1,14 @@
-export function debounce(cb: () => void, duration = 0) {
+export function debounce(cb: (...args: any[]) => void, duration = 0) {
   let timeout: NodeJS.Timeout;
 
-  const fn = () => {
+  const fn = (...args: any[]) => {
     if (timeout) {
       clearTimeout(timeout);
       timeout = undefined;
     }
 
     timeout = setTimeout(() => {
-      cb();
+      cb(...args);
       timeout = undefined;
     }, duration);
   };
