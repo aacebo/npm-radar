@@ -97,7 +97,9 @@
               (nodesSelect)="onNodesSelect($event)"
             ></nrr-graph>
 
-            <nrr-footer></nrr-footer>
+            <nrr-footer
+              [elapseTime]="packageService.elapseTime$ | async"
+            ></nrr-footer>
           </nrr-sidenav-content>
         </nrr-sidenav-container>
       </nrr-sidenav-content>

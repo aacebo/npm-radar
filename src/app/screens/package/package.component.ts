@@ -63,13 +63,11 @@ export class PackageComponent implements OnInit {
 
   download() {
     const png = this._graph?.image();
-    // location.href = `data:image/png;base64,${jpg}`;
     window.open(`data:application/octet-stream;base64,${png}`, '_blank');
   }
 
   onNodesSelect(e: INodeData[]) {
-    console.log(e);
-    // this._router.navigateByUrl(`${encodeURIComponent(e.name)}?v=${e.version}`);
+    this.graphService.select(e);
   }
 
   onListNodeSelect(e: cytoscape.NodeDefinition) {

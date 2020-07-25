@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, forkJoin } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, switchMap } from 'rxjs/operators';
 
 import { parseVersion } from '../../core/utils';
 import { GraphService } from '../../features/graph';
@@ -17,6 +17,9 @@ export class PackageService {
   private readonly _version$ = new BehaviorSubject<string>(undefined);
   private readonly _packages$ = new BehaviorSubject<{ [name: string]: INpmPackage }>({ });
 
+  get elapseTime$() { return this._elapseTime$.asObservable(); }
+  private readonly _elapseTime$ = new BehaviorSubject<number>(undefined);
+
   get packages$() { return this._packages$.pipe(map(p => Object.values(p))); }
 
   constructor(
@@ -27,7 +30,10 @@ export class PackageService {
   findOne(name: string, version?: string) {
     this._name$.next(name);
     this._packages$.next({ });
+    this._elapseTime$.next(undefined);
     this._graphService.reset();
+
+    const start = new Date();
 
     return this._packageHttpService.findOne(name).pipe(
       tap(pkg => {
@@ -39,7 +45,11 @@ export class PackageService {
         this._onPackageLoad(pkg, v);
 
         if (Object.keys(dependencies).length) {
-          this._find(dependencies).subscribe();
+          this._find(dependencies).subscribe(() => {
+            this._onComplete(start);
+          });
+        } else {
+          this._onComplete(start);
         }
       }),
     );
@@ -54,7 +64,7 @@ export class PackageService {
                          .map(n => this._packageHttpService.findOne(n));
 
       return forkJoin(calls).pipe(
-        tap(async res => {
+        switchMap(async res => {
           for (const pkg of res) {
             const pkgVersion = this._onPackageLoad(pkg, dependencies[pkg.name]);
             _versions[pkg.name] = dependencies[pkg.name];
@@ -81,5 +91,9 @@ export class PackageService {
     }
 
     return version;
+  }
+
+  private _onComplete(start: Date) {
+    this._elapseTime$.next((new Date()).getTime() - start.getTime());
   }
 }

@@ -52,7 +52,6 @@ export class GraphComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._graph = cytoscape({
       container: this._el.nativeElement,
-      elements: [],
       style: css,
       selectionType: 'single',
       zoom: this._zoom,
@@ -64,6 +63,10 @@ export class GraphComponent implements OnInit, OnDestroy {
     });
 
     this._graph.on('select', debounce((e: cytoscape.EventObject) => {
+      this.nodesSelect.emit(e.cy.nodes(':selected').map(n => n.data()));
+    }, 500));
+
+    this._graph.on('unselect', debounce((e: cytoscape.EventObject) => {
       this.nodesSelect.emit(e.cy.nodes(':selected').map(n => n.data()));
     }, 500));
   }

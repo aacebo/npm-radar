@@ -20,6 +20,9 @@ export class GraphService {
   private get _nodes() { return this._nodes$.value; }
   private readonly _nodes$ = new BehaviorSubject<{ [id: string]: cytoscape.NodeDefinition }>({ });
 
+  get selected$() { return this._selected$.asObservable(); }
+  private readonly _selected$ = new BehaviorSubject<INodeData[]>([ ]);
+
   private get _edges() { return this._edges$.value; }
   private readonly _edges$ = new BehaviorSubject<{ [id: string]: cytoscape.EdgeDefinition }>({ });
 
@@ -31,6 +34,10 @@ export class GraphService {
     this._nodes$.next({ });
     this._edges$.next({ });
     this._maxPackageSize = 0;
+  }
+
+  select(selected: INodeData[]) {
+    this._selected$.next(selected);
   }
 
   add(pkg: INpmPackageVersion, pkgs: { [name: string]: INpmPackage }) {
