@@ -64,11 +64,11 @@ export class GraphComponent implements OnInit, OnDestroy {
 
     this._graph.on('select', debounce((e: cytoscape.EventObject) => {
       this.nodesSelect.emit(e.cy.nodes(':selected').map(n => n.data()));
-    }, 500));
+    }, 100));
 
     this._graph.on('unselect', debounce((e: cytoscape.EventObject) => {
       this.nodesSelect.emit(e.cy.nodes(':selected').map(n => n.data()));
-    }, 500));
+    }, 100));
   }
 
   ngOnDestroy() {

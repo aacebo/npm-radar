@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, forkJoin } from 'rxjs';
-import { map, tap, switchMap } from 'rxjs/operators';
+import { map, tap, switchMap, withLatestFrom } from 'rxjs/operators';
 
 import { parseVersion } from '../../core/utils';
 import { GraphService } from '../../features/graph';
 
-import { INpmPackage } from './models';
+import { INpmPackage, INpmPackageVersion } from './models';
 import { mapPackage } from './utils';
 import { PackageHttpService } from './package-http.service';
 
@@ -21,6 +21,27 @@ export class PackageService {
   private readonly _elapseTime$ = new BehaviorSubject<number>(undefined);
 
   get packages$() { return this._packages$.pipe(map(p => Object.values(p))); }
+  get selectedPackages$() {
+    return this._graphService.selected$.pipe(
+      withLatestFrom(this._graphService.nodes$),
+      withLatestFrom(this._packages$),
+      map(([[s, n], p]) => {
+        const packages: { [id: string]: INpmPackageVersion } = { };
+
+        if (s.length) {
+          for (const node of s) {
+            packages[node.id] = p[node.name].versions[node.version];
+          }
+        } else {
+          for (const node of n) {
+            packages[node.data.id] = p[node.data.name].versions[node.data.version];
+          }
+        }
+
+        return packages;
+      }),
+    );
+  }
 
   constructor(
     private readonly _graphService: GraphService,

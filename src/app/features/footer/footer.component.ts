@@ -1,5 +1,7 @@
 import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
 
+import { INpmPackageVersion } from '../../screens/package';
+
 @Component({
   selector: 'nrr-footer',
   templateUrl: './footer.component.html',
@@ -10,4 +12,5 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@a
 })
 export class FooterComponent {
   @Input() elapseTime: number;
+  @Input() selectedPackages: { [id: string]: INpmPackageVersion } = { };
 }

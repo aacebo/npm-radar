@@ -1,9 +1,10 @@
 <div class="start">
-  <div *ngIf="elapseTime">{{ elapseTime | elapseTime }}</div>
+  <div *ngIf="elapseTime">Elapse: {{ elapseTime | elapseTime }}</div>
 </div>
 
 <div class="spacer"></div>
 
 <div class="end">
-
+  <div>Packages: {{ selectedPackages | totalCount }}</div>
+  <div>Size: {{ selectedPackages | totalSize }}</div>
 </div>
