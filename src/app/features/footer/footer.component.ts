@@ -12,5 +12,6 @@ import { INpmPackageVersion } from '../../screens/package';
 })
 export class FooterComponent {
   @Input() elapseTime: number;
-  @Input() selectedPackages: { [id: string]: INpmPackageVersion } = { };
+  @Input() packageVersions: { [id: string]: INpmPackageVersion } = { };
+  @Input() selectedPackageVersions: { [id: string]: INpmPackageVersion } = { };
 }

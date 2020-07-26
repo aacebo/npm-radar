@@ -7,13 +7,28 @@ import { bytesToString } from '../../utils';
   name: 'totalSize',
 })
 export class TotalSizePipe implements PipeTransform {
-  transform(pkgs: { [id: string]: INpmPackageVersion }) {
+  transform(
+    selectedPkgs: { [id: string]: INpmPackageVersion },
+    pkgs: { [id: string]: INpmPackageVersion },
+  ) {
+    const bytes = this._calcSize(selectedPkgs);
+    const total = this._calcSize(pkgs);
+    const pct = (bytes / total) * 100;
+
+    if (total === bytes) {
+      return bytesToString(bytes);
+    }
+
+    return `${bytesToString(bytes)} (${pct.toFixed(2)}%)`;
+  }
+
+  private _calcSize(pkgs: { [id: string]: INpmPackageVersion }) {
     let bytes = 0;
 
     for (const pkg of Object.values(pkgs)) {
       bytes += pkg.dist.unpackedSize || 0;
     }
 
-    return bytesToString(bytes);
+    return bytes;
   }
 }

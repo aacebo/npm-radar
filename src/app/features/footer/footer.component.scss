@@ -1,7 +1,9 @@
+@import './footer';
+
 .nrr-footer {
   display: flex;
-  height: 20px;
-  min-height: 20px;
+  height: $nrr-footer-height;
+  min-height: $nrr-footer-height;
   font-size: 13px;
   background-color: var(--bg-dark);
 

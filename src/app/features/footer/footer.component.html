@@ -5,6 +5,6 @@
 <div class="spacer"></div>
 
 <div class="end">
-  <div>Packages: {{ selectedPackages | totalCount }}</div>
-  <div>Size: {{ selectedPackages | totalSize }}</div>
+  <div>Packages: {{ selectedPackageVersions | totalCount: packageVersions }}</div>
+  <div>Size: {{ selectedPackageVersions | totalSize: packageVersions }}</div>
 </div>

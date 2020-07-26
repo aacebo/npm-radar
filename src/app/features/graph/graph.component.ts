@@ -17,20 +17,8 @@ import css from './graph.css';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GraphComponent implements OnInit, OnDestroy {
-  @Input()
-  get elements() { return this._elements; }
-  set elements(v) {
-    this._elements = v;
-    const values = Object.values(v || { });
-
-    if (this._graph && values.length) {
-      const elems = this._graph.add(values);
-      elems.layout({ name: 'random' }).run();
-      this._graph.center().fit();
-      this._runLayout();
-    }
-  }
-  private _elements: { [id: string]: cytoscape.EdgeDefinition | cytoscape.NodeDefinition } = { };
+  @Input() nodes: { [id: string]: cytoscape.NodeDefinition } = { };
+  @Input() edges: { [id: string]: cytoscape.EdgeDefinition } = { };
 
   @Input()
   get zoom() { return this._zoom; }
@@ -44,7 +32,6 @@ export class GraphComponent implements OnInit, OnDestroy {
   @Output() nodesSelect = new EventEmitter<INodeData[]>();
 
   private _graph: cytoscape.Core;
-  private readonly _runLayout = debounce(() => this._graph.layout(GRAPH_LAYOUT).run(), 500);
   private readonly _runZoom = debounce(() => this.zoom = this._graph.zoom(), 500);
 
   constructor(private readonly _el: ElementRef<HTMLElement>) { }
@@ -53,9 +40,14 @@ export class GraphComponent implements OnInit, OnDestroy {
     this._graph = cytoscape({
       container: this._el.nativeElement,
       style: css,
+      layout: GRAPH_LAYOUT,
       selectionType: 'single',
       zoom: this._zoom,
       boxSelectionEnabled: true,
+      elements: [
+        ...Object.values(this.nodes),
+        ...Object.values(this.edges),
+      ],
     });
 
     this._graph.on('zoom', () => {
@@ -81,6 +73,10 @@ export class GraphComponent implements OnInit, OnDestroy {
 
   clear() {
     this._graph.elements().remove();
+  }
+
+  layout() {
+    this._graph.layout(GRAPH_LAYOUT).run();
   }
 
   image() {

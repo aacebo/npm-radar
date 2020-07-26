@@ -13,15 +13,34 @@ import { PackageHttpService } from './package-http.service';
   providedIn: 'root',
 })
 export class PackageService {
-  private readonly _name$ = new BehaviorSubject<string>(undefined);
-  private readonly _version$ = new BehaviorSubject<string>(undefined);
-  private readonly _packages$ = new BehaviorSubject<{ [name: string]: INpmPackage }>({ });
+  get complete$() { return this._complete$.asObservable(); }
+  private readonly _complete$ = new BehaviorSubject<boolean>(undefined);
 
   get elapseTime$() { return this._elapseTime$.asObservable(); }
   private readonly _elapseTime$ = new BehaviorSubject<number>(undefined);
 
   get packages$() { return this._packages$.pipe(map(p => Object.values(p))); }
-  get selectedPackages$() {
+  private readonly _packages$ = new BehaviorSubject<{ [name: string]: INpmPackage }>({ });
+
+  private readonly _name$ = new BehaviorSubject<string>(undefined);
+  private readonly _version$ = new BehaviorSubject<string>(undefined);
+
+  get packageVersions$() {
+    return this._graphService.nodes$.pipe(
+      withLatestFrom(this._packages$),
+      map(([n, p]) => {
+        const packages: { [id: string]: INpmPackageVersion } = { };
+
+        for (const node of n) {
+          packages[node.data.id] = p[node.data.name].versions[node.data.version];
+        }
+
+        return packages;
+      }),
+    );
+  }
+
+  get selectedPackageVersions$() {
     return this._graphService.selected$.pipe(
       withLatestFrom(this._graphService.nodes$),
       withLatestFrom(this._packages$),
@@ -52,6 +71,7 @@ export class PackageService {
     this._name$.next(name);
     this._packages$.next({ });
     this._elapseTime$.next(undefined);
+    this._complete$.next(false);
     this._graphService.reset();
 
     const start = new Date();
@@ -116,5 +136,6 @@ export class PackageService {
 
   private _onComplete(start: Date) {
     this._elapseTime$.next((new Date()).getTime() - start.getTime());
+    this._complete$.next(true);
   }
 }

@@ -13,9 +13,6 @@ import { INodeData } from './node-data.interface';
   providedIn: 'root',
 })
 export class GraphService {
-  get elements$() { return this._elements$.asObservable(); }
-  private readonly _elements$ = new BehaviorSubject<{ [id: string]: cytoscape.EdgeDefinition | cytoscape.NodeDefinition }>({ });
-
   get nodes$() { return this._nodes$.pipe(map(n => Object.values(n))); }
   private get _nodes() { return this._nodes$.value; }
   private readonly _nodes$ = new BehaviorSubject<{ [id: string]: cytoscape.NodeDefinition }>({ });
@@ -23,6 +20,7 @@ export class GraphService {
   get selected$() { return this._selected$.asObservable(); }
   private readonly _selected$ = new BehaviorSubject<INodeData[]>([ ]);
 
+  get edges$() { return this._edges$.asObservable(); }
   private get _edges() { return this._edges$.value; }
   private readonly _edges$ = new BehaviorSubject<{ [id: string]: cytoscape.EdgeDefinition }>({ });
 
@@ -33,6 +31,7 @@ export class GraphService {
   reset() {
     this._nodes$.next({ });
     this._edges$.next({ });
+    this._selected$.next([ ]);
     this._maxPackageSize = 0;
   }
 
@@ -67,10 +66,6 @@ export class GraphService {
 
     this._nodes$.next({ ...this._nodes, ...nodes });
     this._edges$.next({ ...this._edges, ...incomingEdges, ...outgoingEdges });
-
-    setTimeout(() => {
-      this._elements$.next({ ...nodes, ...incomingEdges, ...outgoingEdges });
-    }, 500);
   }
 
   private _calcWeight(size: number | undefined, dependencies: number, weightBySize: boolean) {

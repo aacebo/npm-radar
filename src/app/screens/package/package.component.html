@@ -91,15 +91,23 @@
               <nrr-icon name="download"></nrr-icon>
             </button>
 
+            <div
+              *ngIf="!(packageService.complete$ | async)"
+              class="spacer"
+            ></div>
+
             <nrr-graph
+              *ngIf="packageService.complete$ | async"
               [(zoom)]="zoom"
-              [elements]="graphService.elements$ | async"
+              [nodes]="graphService.nodes$ | async"
+              [edges]="graphService.edges$ | async"
               (nodesSelect)="onNodesSelect($event)"
             ></nrr-graph>
 
             <nrr-footer
               [elapseTime]="packageService.elapseTime$ | async"
-              [selectedPackages]="packageService.selectedPackages$ | async"
+              [packageVersions]="packageService.packageVersions$ | async"
+              [selectedPackageVersions]="packageService.selectedPackageVersions$ | async"
             ></nrr-footer>
           </nrr-sidenav-content>
         </nrr-sidenav-container>

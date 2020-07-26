@@ -1,5 +1,7 @@
+@import '../footer/footer';
+
 .nrr-graph {
   display: block;
-  height: calc(100% - 20px);
+  height: calc(100% - #{$nrr-footer-height});
   max-width: 100%;
 }
