@@ -1,6 +1,8 @@
 <nrr-progress-bar
   *ngIf="!(searchService.complete$ | async)"
   mode="indeterminate"
+  size="sm"
+  clear
 ></nrr-progress-bar>
 
 <router-outlet></router-outlet>

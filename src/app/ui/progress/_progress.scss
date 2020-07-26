@@ -1,3 +1,9 @@
+$nrr-progress-bar-sizes: (
+  'sm': 2px,
+  'md': 8px,
+  'lg': 16px
+);
+
 @keyframes nrr-bar-slide {
   0% {
     transform: translateX(0%) scaleX(0.5);
@@ -19,8 +25,20 @@
 
 @mixin nrr-bar-color($color) {
   &.#{ $color } {
+    .nrr-progress-bar-background {
+      fill: var(--#{ $color }-light-a50);
+    }
+
     .nrr-progress-bar-foreground {
       fill: var(--#{ $color }-light);
+    }
+  }
+}
+
+@mixin nrr-bar-size($size) {
+  &.#{ $size } {
+    svg {
+      height: map-get($nrr-progress-bar-sizes, $size);
     }
   }
 }

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation, Input } from '@angular/core';
 
-import { ThemeColor } from '../core/color/theme-color.type';
+import { ThemeColor } from '../core/types/theme-color.type';
 
 import { FormFieldControlBase } from '../form-field/form-field-control.base';
 import { formFieldControlProvider } from '../form-field/form-field-control.provider';

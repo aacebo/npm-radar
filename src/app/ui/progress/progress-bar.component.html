@@ -1,7 +1,8 @@
-<svg
-  width="100%"
-  height="2px"
->
+<svg>
+  <rect
+    *ngIf="!clear"
+    class="nrr-progress-bar-background"
+  ></rect>
   <rect
     class="nrr-progress-bar-foreground"
     [style.width.%]="percentage"

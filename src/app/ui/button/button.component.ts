@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, ElementRef, Input } from '@angular/core';
 
-import { ThemeColor } from '../core/color/theme-color.type';
+import { ThemeColor } from '../core/types/theme-color.type';
 
 const NRR_BUTTON_HOST_ATTRIBUTES = [
   'nrr-button',

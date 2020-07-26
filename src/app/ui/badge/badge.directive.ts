@@ -11,7 +11,7 @@ import {
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { DomPortalOutlet, ComponentPortal } from '@angular/cdk/portal';
 
-import { ThemeColor } from '../core/color/theme-color.type';
+import { ThemeColor } from '../core/types/theme-color.type';
 
 import { BadgeComponent } from './badge.component';
 import { BadgePosition } from './badge-position.enum';

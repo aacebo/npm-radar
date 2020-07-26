@@ -96,6 +96,7 @@
               class="spacer"
             >
               <nrr-progress-bar
+                size="lg"
                 [value]="packageService.loaded$ | async"
                 [total]="packageService.total$ | async"
               ></nrr-progress-bar>
