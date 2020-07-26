@@ -2,6 +2,8 @@ import { Component, OnInit, ViewEncapsulation, ChangeDetectionStrategy, ElementR
 import { coerceNumberProperty } from '@angular/cdk/coercion';
 import cytoscape from 'cytoscape';
 
+import { debounce } from '../../core/utils';
+
 import { GRAPH_LAYOUT } from './graph-layout.constant';
 import { INodeData } from './node-data.interface';
 import css from './graph.css';
@@ -15,18 +17,8 @@ import css from './graph.css';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GraphComponent implements OnInit, OnDestroy {
-  @Input()
-  get elements() { return this._elements; }
-  set elements(v) {
-    this._elements = v;
-
-    if (this._graph) {
-      this._graph.nodes().remove();
-      this._graph.add(v);
-      this._graph.layout(GRAPH_LAYOUT).run();
-    }
-  }
-  private _elements: cytoscape.ElementDefinition[] = [];
+  @Input() nodes: { [id: string]: cytoscape.NodeDefinition } = { };
+  @Input() edges: { [id: string]: cytoscape.EdgeDefinition } = { };
 
   @Input()
   get zoom() { return this._zoom; }
@@ -37,38 +29,38 @@ export class GraphComponent implements OnInit, OnDestroy {
   private _zoom = 0.6;
 
   @Output() zoomChange = new EventEmitter<number>();
-  @Output() nodeSelect = new EventEmitter<INodeData>();
+  @Output() nodesSelect = new EventEmitter<INodeData[]>();
 
   private _graph: cytoscape.Core;
-  private _zoomTimeout: NodeJS.Timeout;
+  private readonly _runZoom = debounce(() => this.zoom = this._graph.zoom(), 500);
 
   constructor(private readonly _el: ElementRef<HTMLElement>) { }
 
   ngOnInit() {
     this._graph = cytoscape({
       container: this._el.nativeElement,
-      elements: this.elements,
-      layout: GRAPH_LAYOUT,
       style: css,
+      layout: GRAPH_LAYOUT,
       selectionType: 'single',
       zoom: this._zoom,
+      boxSelectionEnabled: true,
+      elements: [
+        ...Object.values(this.nodes),
+        ...Object.values(this.edges),
+      ],
     });
 
     this._graph.on('zoom', () => {
-      if (this._zoomTimeout) {
-        clearTimeout(this._zoomTimeout);
-        this._zoomTimeout = undefined;
-      }
-
-      this._zoomTimeout = setTimeout(() => {
-        this.zoom = this._graph.zoom();
-        this._zoomTimeout = undefined;
-      }, 500);
+      this._runZoom();
     });
 
-    this._graph.on('select', e => {
-      this.nodeSelect.emit(e.target._private.data);
-    });
+    this._graph.on('select', debounce((e: cytoscape.EventObject) => {
+      this.nodesSelect.emit(e.cy.nodes(':selected').map(n => n.data()));
+    }, 100));
+
+    this._graph.on('unselect', debounce((e: cytoscape.EventObject) => {
+      this.nodesSelect.emit(e.cy.nodes(':selected').map(n => n.data()));
+    }, 100));
   }
 
   ngOnDestroy() {
@@ -79,8 +71,20 @@ export class GraphComponent implements OnInit, OnDestroy {
     this._graph.center().fit();
   }
 
-  highlight(name: string) {
-    this._graph.nodes().removeClass('highlight');
-    this._graph.nodes(`[name = "${name}"]`).addClass('highlight');
+  clear() {
+    this._graph.elements().remove();
+  }
+
+  layout() {
+    this._graph.layout(GRAPH_LAYOUT).run();
+  }
+
+  image() {
+    return this._graph.png({ output: 'base64' });
+  }
+
+  goTo(id: string) {
+    const node = this._graph.$id(id);
+    this._graph.center(node).fit(node);
   }
 }

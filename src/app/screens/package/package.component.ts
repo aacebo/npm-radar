@@ -1,16 +1,14 @@
 import { Component, ViewEncapsulation, ChangeDetectionStrategy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { withLatestFrom } from 'rxjs/operators';
 
-import { GraphComponent, INodeData } from '../../features/graph';
-import { SettingsService } from '../../features/settings';
+import { GraphComponent, INodeData, GraphService } from '../../features/graph';
+import { SettingsService, ISettings } from '../../features/settings';
 
 import { SearchService } from '../search';
 
 import { PackageService } from './package.service';
 import { IMenus } from './menus.interface';
-import { INpmPackage } from './models';
-import { ISettings } from '../../features/settings/settings.interface';
 
 @Component({
   selector: 'nrr-package',
@@ -31,23 +29,27 @@ export class PackageComponent implements OnInit {
     settings: false,
   };
 
+  private _name: string;
+  private _version: string;
+
   constructor(
     readonly searchService: SearchService,
     readonly packageService: PackageService,
     readonly settingsService: SettingsService,
+    readonly graphService: GraphService,
     private readonly _route: ActivatedRoute,
-    private readonly _router: Router,
   ) { }
 
   ngOnInit() {
     this._route.paramMap.pipe(
       withLatestFrom(this._route.queryParamMap),
     ).subscribe(([paramMap, queryParamMap]) => {
-      const name = paramMap.get('name');
-      const v = queryParamMap.get('v');
+      this._name = paramMap.get('name');
+      this._version = queryParamMap.get('v');
       this.menus.search = false;
+      this._graph?.clear();
 
-      this.packageService.findOne(name, v).subscribe();
+      this.packageService.findOne(this._name, this._version);
     });
   }
 
@@ -59,17 +61,23 @@ export class PackageComponent implements OnInit {
     this._graph?.center();
   }
 
-  onNodeSelect(e: INodeData) {
-    this._router.navigateByUrl(`${encodeURIComponent(e.name)}?v=${e.version}`);
+  download() {
+    const png = this._graph?.image();
+    window.open(`data:application/octet-stream;base64,${png}`, '_blank');
   }
 
-  onPackageSelect(e: INpmPackage) {
-    this._graph?.highlight(e.name);
+  onNodesSelect(e: INodeData[]) {
+    this.graphService.select(e);
+  }
+
+  onListNodeSelect(e: cytoscape.NodeDefinition) {
     this.menus.menu = false;
+    this._graph?.goTo(e.data.id);
   }
 
   onSettingsChange(e: ISettings) {
     this.settingsService.next(e);
-    this.packageService.render();
+    this._graph?.clear();
+    this.packageService.findOne(this._name, this._version);
   }
 }

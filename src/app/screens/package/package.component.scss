@@ -16,6 +16,22 @@
 
     .nrr-sidenav-content {
       display: flex;
+      flex-direction: column;
+
+      .spacer {
+        flex: 1 1 auto;
+        position: relative;
+
+        > .nrr-progress-bar {
+          position: absolute;
+          width: 80%;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          border-radius: 10px;
+          overflow: hidden;
+        }
+      }
 
       .search-btn {
         top: 12px;
@@ -29,18 +45,24 @@
 
       .center-btn {
         right: 10px;
-        bottom: 10px;
+        bottom: 35px;
       }
 
       .settings-btn {
         right: 10px;
-        bottom: 56px;
+        bottom: 81px;
+      }
+
+      .download-btn {
+        right: 10px;
+        bottom: 127px;
       }
 
       .search-btn,
       .menu-btn,
       .center-btn,
-      .settings-btn {
+      .settings-btn,
+      .download-btn {
         position: absolute !important;
         z-index: 3;
 

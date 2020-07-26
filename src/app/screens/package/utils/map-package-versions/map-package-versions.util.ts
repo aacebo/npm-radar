@@ -9,7 +9,7 @@ export function mapPackageVersions(p: INpmPackage) {
       name: p.versions[v].name,
       version: p.versions[v].version,
       description: p.versions[v].description,
-      dependencies: p.versions[v].dependencies,
+      dependencies: p.versions[v].dependencies || { },
       dist: {
         fileCount: p.versions[v].dist.fileCount,
         unpackedSize: p.versions[v].dist.unpackedSize,

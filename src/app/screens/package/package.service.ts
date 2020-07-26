@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, forkJoin } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { BehaviorSubject, forkJoin, of } from 'rxjs';
+import { map, tap, switchMap, withLatestFrom, catchError } from 'rxjs/operators';
 
-import { SettingsService } from '../../features/settings';
-import { graphPackage, parseVersion } from '../../features/graph';
+import { parseVersion } from '../../core/utils';
+import { GraphService } from '../../features/graph';
 
-import { INpmPackage } from './models';
+import { INpmPackage, INpmPackageVersion } from './models';
 import { mapPackage } from './utils';
 import { PackageHttpService } from './package-http.service';
 
@@ -13,63 +14,105 @@ import { PackageHttpService } from './package-http.service';
   providedIn: 'root',
 })
 export class PackageService {
+  get complete$() { return this._complete$.asObservable(); }
+  private readonly _complete$ = new BehaviorSubject<boolean>(false);
+
+  get total$() { return this._total$.asObservable(); }
+  private readonly _total$ = new BehaviorSubject<number>(0);
+
+  get loaded$() { return this._loaded$.asObservable(); }
+  private readonly _loaded$ = new BehaviorSubject<number>(0);
+
+  get elapseTime$() { return this._elapseTime$.asObservable(); }
+  private readonly _elapseTime$ = new BehaviorSubject<number>(undefined);
+
+  get packages$() { return this._packages$.pipe(map(p => Object.values(p))); }
+  private readonly _packages$ = new BehaviorSubject<{ [name: string]: INpmPackage }>({ });
+
   private readonly _name$ = new BehaviorSubject<string>(undefined);
   private readonly _version$ = new BehaviorSubject<string>(undefined);
-  private readonly _elements$ = new BehaviorSubject<cytoscape.ElementDefinition[]>([ ]);
-  private readonly _packages$ = new BehaviorSubject<{ [name: string]: INpmPackage }>({ });
-  private readonly _loading$ = new BehaviorSubject(false);
-  private _max = 0;
+  private readonly _error$ = new BehaviorSubject<HttpErrorResponse>(undefined);
 
-  get loading$() { return this._loading$.asObservable(); }
-  get elements$() { return this._elements$.asObservable(); }
-  get packages$() { return this._packages$.pipe(map(p => Object.values(p))); }
+  get packageVersions$() {
+    return this._graphService.nodes$.pipe(
+      withLatestFrom(this._packages$),
+      map(([n, p]) => {
+        const packages: { [id: string]: INpmPackageVersion } = { };
 
-  constructor(
-    private readonly _settingsService: SettingsService,
-    private readonly _packageHttpService: PackageHttpService,
-  ) { }
-
-  render() {
-    const pkgs = this._packages$.value;
-    this._elements$.next(graphPackage(pkgs[this._name$.value]?.versions[this._version$.value], pkgs, this._max, this._settingsService.get('weightBySize')));
-  }
-
-  findOne(name: string, version?: string) {
-    this._name$.next(name);
-    this._loading$.next(true);
-    this._max = 0;
-
-    return this._packageHttpService.findOne(name).pipe(
-      map(pkg => {
-        const latest = pkg['dist-tags'].latest;
-        const v = version || latest;
-        const dependencies = pkg.versions[v]?.dependencies || { };
-        const size = pkg.versions[v]?.dist.unpackedSize;
-
-        this._version$.next(v);
-
-        if (size > this._max) {
-          this._max = size;
+        for (const node of n) {
+          packages[node.data.id] = p[node.data.name].versions[node.data.version];
         }
 
-        if (Object.keys(dependencies).length) {
-          this._find(dependencies).subscribe(pkgs => {
-              this._onComplete({
-                [pkg.name]: mapPackage(pkg),
-                ...pkgs,
-              });
-          });
-        } else {
-          this._onComplete({ [pkg.name]: mapPackage(pkg) });
-        }
-
-        return pkg;
+        return packages;
       }),
     );
   }
 
+  get selectedPackageVersions$() {
+    return this._graphService.selected$.pipe(
+      withLatestFrom(this._graphService.nodes$),
+      withLatestFrom(this._packages$),
+      map(([[s, n], p]) => {
+        const packages: { [id: string]: INpmPackageVersion } = { };
+
+        if (s.length) {
+          for (const node of s) {
+            packages[node.id] = p[node.name].versions[node.version];
+          }
+        } else {
+          for (const node of n) {
+            packages[node.data.id] = p[node.data.name].versions[node.data.version];
+          }
+        }
+
+        return packages;
+      }),
+    );
+  }
+
+  constructor(
+    private readonly _graphService: GraphService,
+    private readonly _packageHttpService: PackageHttpService,
+  ) { }
+
+  findOne(name: string, version?: string) {
+    this._name$.next(name);
+    this._packages$.next({ });
+    this._elapseTime$.next(undefined);
+    this._error$.next(undefined);
+    this._complete$.next(false);
+    this._total$.next(1);
+    this._loaded$.next(0);
+    this._graphService.reset();
+
+    const start = new Date();
+
+    return this._packageHttpService.findOne(name).pipe(
+      tap(pkg => {
+        const latest = pkg['dist-tags'].latest;
+        const v = version || latest;
+        const dependencies = pkg.versions[v]?.dependencies || { };
+
+        this._version$.next(v);
+        this._onPackageLoad(pkg, v);
+
+        if (Object.keys(dependencies).length) {
+          this._find(dependencies).subscribe(() => {
+            this._onComplete(start);
+          });
+        } else {
+          this._onComplete(start);
+        }
+      }),
+      catchError((error: HttpErrorResponse) => {
+        this._error$.next(error);
+        this._onComplete(start);
+        return of(error);
+      }),
+    ).subscribe();
+  }
+
   private _find(deps: { [name: string]: string }) {
-    let _packages: { [name: string]: INpmPackage } = { };
     const _versions: { [name: string]: string } = { };
 
     const find = (dependencies: { [name: string]: string }) => {
@@ -77,29 +120,16 @@ export class PackageService {
       const calls = names.filter(n => !_versions[n] || _versions[n] !== dependencies[n])
                          .map(n => this._packageHttpService.findOne(n));
 
+      this._total$.next(this._total$.value + calls.length);
+
       return forkJoin(calls).pipe(
         switchMap(async res => {
           for (const pkg of res) {
-            const size = pkg.versions[parseVersion(dependencies[pkg.name])]?.dist.unpackedSize;
-
-            _packages[pkg.name] = mapPackage(pkg);
+            const pkgVersion = this._onPackageLoad(pkg, dependencies[pkg.name]);
             _versions[pkg.name] = dependencies[pkg.name];
 
-            if (size > this._max) {
-              this._max = size;
-            }
-
-            const p = await find(pkg.versions[parseVersion(dependencies[pkg.name])]?.dependencies || { }).toPromise();
-
-            if (p) {
-              _packages = {
-                ..._packages,
-                ...p,
-              };
-            }
+            await find(pkgVersion?.dependencies || { }).toPromise();
           }
-
-          return _packages;
         }),
       );
     };
@@ -107,13 +137,24 @@ export class PackageService {
     return find(deps);
   }
 
-  private _onComplete(pkgs: { [name: string]: INpmPackage }) {
+  private _onPackageLoad(pkg: INpmPackage, v: string) {
+    const version = pkg.versions[parseVersion(v)];
+
+    this._loaded$.next(this._loaded$.value + 1);
     this._packages$.next({
       ...this._packages$.value,
-      ...pkgs,
+      [pkg.name]: mapPackage(pkg),
     });
 
-    this._loading$.next(false);
-    this.render();
+    if (version) {
+      this._graphService.add(version, this._packages$.value);
+    }
+
+    return version;
+  }
+
+  private _onComplete(start: Date) {
+    this._elapseTime$.next((new Date()).getTime() - start.getTime());
+    this._complete$.next(true);
   }
 }

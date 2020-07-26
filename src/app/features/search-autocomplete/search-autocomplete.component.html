@@ -22,6 +22,10 @@
     [routerLink]="['/', package.name]"
     routerLinkActive="active"
   >
-    <nrr-search-item [package]="package"></nrr-search-item>
+    <nrr-list-item>
+      <nrr-list-item-title>{{ package.name }}</nrr-list-item-title>
+      <nrr-list-item-subtitle>{{ package.description }}</nrr-list-item-subtitle>
+      <nrr-list-item-description>{{ package.version }}</nrr-list-item-description>
+    </nrr-list-item>
   </a>
 </div>

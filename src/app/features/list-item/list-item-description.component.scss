@@ -1,0 +1,9 @@
+@import '../../../styles/utils';
+
+.nrr-list-item-description {
+  margin: auto auto 0 auto;
+  font-size: 10pt;
+  max-width: 20%;
+
+  @include nrr-ellipsis;
+}

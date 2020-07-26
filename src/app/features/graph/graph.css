@@ -6,6 +6,12 @@ node {
   background-color: #008b6e;
 }
 
+node:selected {
+  border-width: 1px;
+  border-color: yellow;
+  color: yellow;
+}
+
 node[fontSize] {
   font-size: data(fontSize);
 }
@@ -21,10 +27,6 @@ node[size] {
 
 node[outgoingEdges] {
   background-color: mapData(outgoingEdges, 0, 5, blue, red);
-}
-
-node.highlight {
-  background-color: #62efcd;
 }
 
 :parent {

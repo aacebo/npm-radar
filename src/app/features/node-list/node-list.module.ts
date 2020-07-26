@@ -5,17 +5,19 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormFieldModule } from '../../ui/form-field';
 import { IconModule } from '../../ui/icon';
 
-import { PackageListComponent } from './package-list.component';
-import { PackageListItemComponent } from './package-list-item.component';
+import { ListItemModule } from '../list-item';
+
+import { NodeListComponent } from './node-list.component';
 
 @NgModule({
-  declarations: [PackageListComponent, PackageListItemComponent],
-  exports: [PackageListComponent],
+  declarations: [NodeListComponent],
+  exports: [NodeListComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     FormFieldModule,
     IconModule,
+    ListItemModule,
   ],
 })
-export class PackageListModule { }
+export class NodeListModule { }

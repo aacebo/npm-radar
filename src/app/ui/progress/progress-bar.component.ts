@@ -1,7 +1,8 @@
 import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
-import { coerceNumberProperty } from '@angular/cdk/coercion';
+import { coerceNumberProperty, coerceBooleanProperty } from '@angular/cdk/coercion';
 
-import { ThemeColor } from '../core/color/theme-color.type';
+import { ThemeColor } from '../core/types/theme-color.type';
+import { ThemeSize } from '../core/types/theme-size.type';
 
 import { ProgressMode } from './progress-mode.enum';
 
@@ -12,7 +13,8 @@ import { ProgressMode } from './progress-mode.enum';
   host: {
     class: 'nrr-progress-bar',
     role: 'progressbar',
-    '[class]': '[mode, color]',
+    '[class]': '[mode, color, size]',
+    '[class.clear]': 'clear',
   },
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -20,6 +22,7 @@ import { ProgressMode } from './progress-mode.enum';
 export class ProgressBarComponent {
   @Input() mode = ProgressMode.Determinate;
   @Input() color: ThemeColor = 'primary';
+  @Input() size: ThemeSize = 'md';
 
   @Input()
   get total() { return this._total; }
@@ -34,6 +37,13 @@ export class ProgressBarComponent {
     this._value = coerceNumberProperty(v);
   }
   private _value = 0;
+
+  @Input()
+  get clear() { return this._clear; }
+  set clear(v) {
+    this._clear = coerceBooleanProperty(v);
+  }
+  private _clear?: boolean;
 
   get percentage() {
     return this.mode === ProgressMode.Determinate ?

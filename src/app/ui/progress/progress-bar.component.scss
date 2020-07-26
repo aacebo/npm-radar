@@ -9,13 +9,25 @@
   @include nrr-bar-color(warn);
   @include nrr-bar-color(danger);
 
+  @include nrr-bar-size(sm);
+  @include nrr-bar-size(md);
+  @include nrr-bar-size(lg);
+
   &.indeterminate {
     .nrr-progress-bar-foreground {
       @include nrr-bar-indeterminate();
     }
   }
 
-  .nrr-progress-bar-foreground {
-    transition: all $nrr-animation-duration $nrr-animation-timing-function;
+  svg {
+    width: 100%;
+
+    .nrr-progress-bar-background {
+      width: 100%;
+    }
+
+    .nrr-progress-bar-foreground {
+      transition: all $nrr-animation-duration $nrr-animation-timing-function;
+    }
   }
 }

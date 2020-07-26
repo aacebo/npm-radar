@@ -16,11 +16,13 @@
       text-decoration: none;
 
       &:not(:last-child) {
-        border-bottom: 1px solid var(--hairline-strong-a15);
+        .nrr-list-item {
+          border-bottom: 1px solid var(--hairline-strong-a15);
+        }
       }
 
       &.active {
-        .nrr-search-item--name {
+        .nrr-list-item-title {
           color: var(--primary);
           text-decoration: underline;
         }

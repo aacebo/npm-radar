@@ -6,17 +6,19 @@ import { RouterModule } from '@angular/router';
 import { FormFieldModule } from '../../ui/form-field';
 import { IconModule } from '../../ui/icon';
 
+import { ListItemModule } from '../list-item';
+
 import { SearchAutocompleteComponent } from './search-autocomplete.component';
-import { SearchItemComponent } from './search-item.component';
 
 @NgModule({
-  declarations: [SearchAutocompleteComponent, SearchItemComponent],
+  declarations: [SearchAutocompleteComponent],
   exports: [SearchAutocompleteComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     RouterModule,
 
+    ListItemModule,
     FormFieldModule,
     IconModule,
   ],

@@ -1,0 +1,7 @@
+@import '../../../styles/utils';
+
+.nrr-list-item-subtitle {
+  font-size: 10pt;
+
+  @include nrr-ellipsis;
+}

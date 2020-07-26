@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, ViewEncapsulation, Input, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
-import { ThemeColor } from '../core/color/theme-color.type';
+import { ThemeColor } from '../core/types/theme-color.type';
 
 import { BadgePosition } from './badge-position.enum';
 

@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 
-import { ProgressService } from './ui/progress';
+import { SearchService } from './screens/search';
 
 @Component({
   selector: 'nrr-root',
@@ -11,5 +11,5 @@ import { ProgressService } from './ui/progress';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-  constructor(readonly progressService: ProgressService) { }
+  constructor(readonly searchService: SearchService) { }
 }
