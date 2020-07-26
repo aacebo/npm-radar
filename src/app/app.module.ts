@@ -22,7 +22,7 @@ cytoscape.use(fcose);
     HttpClientModule,
 
     AppRoutingModule,
-    ProgressModule.withHttp(),
+    ProgressModule,
   ],
 })
 export class AppModule { }

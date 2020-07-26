@@ -1,5 +1,5 @@
 <nrr-progress-bar
-  *ngIf="progressService.inProgress$ | async"
+  *ngIf="!(searchService.complete$ | async)"
   mode="indeterminate"
 ></nrr-progress-bar>
 

@@ -21,7 +21,7 @@ export class SearchComponent implements OnInit {
     const q = this._route.snapshot.queryParamMap.get('q');
 
     if (q) {
-      this.searchService.find(q).subscribe();
+      this.searchService.find(q);
     }
   }
 }

@@ -49,7 +49,7 @@ export class PackageComponent implements OnInit {
       this.menus.search = false;
       this._graph?.clear();
 
-      this.packageService.findOne(this._name, this._version).subscribe();
+      this.packageService.findOne(this._name, this._version);
     });
   }
 
@@ -78,6 +78,6 @@ export class PackageComponent implements OnInit {
   onSettingsChange(e: ISettings) {
     this.settingsService.next(e);
     this._graph?.clear();
-    this.packageService.findOne(this._name, this._version).subscribe();
+    this.packageService.findOne(this._name, this._version);
   }
 }

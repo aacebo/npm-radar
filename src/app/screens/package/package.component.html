@@ -8,7 +8,7 @@
       <nrr-search-autocomplete
         [value]="searchService.text$ | async"
         [results]="searchService.results$ | async"
-        (valueChange)="searchService.find($event).subscribe()"
+        (valueChange)="searchService.find($event)"
       ></nrr-search-autocomplete>
     </ng-template>
   </nrr-sidenav>
@@ -94,7 +94,12 @@
             <div
               *ngIf="!(packageService.complete$ | async)"
               class="spacer"
-            ></div>
+            >
+              <nrr-progress-bar
+                [value]="packageService.loaded$ | async"
+                [total]="packageService.total$ | async"
+              ></nrr-progress-bar>
+            </div>
 
             <nrr-graph
               *ngIf="packageService.complete$ | async"

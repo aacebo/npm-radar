@@ -5,6 +5,7 @@ import { IconModule } from '../../ui/icon';
 import { ButtonModule } from '../../ui/button';
 import { SidenavModule } from '../../ui/sidenav';
 import { BadgeModule } from '../../ui/badge';
+import { ProgressModule } from '../../ui/progress';
 
 import { SearchAutocompleteModule } from '../../features/search-autocomplete';
 import { GraphModule } from '../../features/graph';
@@ -31,6 +32,7 @@ import { PackageRoutingModule } from './package-routing.module';
     ButtonModule,
     SidenavModule,
     BadgeModule,
+    ProgressModule,
   ],
 })
 export class PackageModule { }
