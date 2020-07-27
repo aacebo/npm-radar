@@ -15,7 +15,7 @@ app.get('/package/:pkg', cors(), (req, res) => {
 });
 
 app.get('/suggestions', cors(), (req, res) => {
-  const url = `https://www.npmjs.com/suggestions?q=${req.query.q}`;
+  const url = `https://www.npmjs.com/search/suggestions?q=${req.query.q}`;
 
   request.get({ url, json: true }, (_err, _resp, body) => {
     res.jsonp(body);
