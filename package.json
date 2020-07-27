@@ -5,7 +5,9 @@
     "postinstall": "ngcc",
     "ng": "ng",
     "start": "ng serve",
+    "start:firebase": "ng build --prod && firebase serve",
     "build": "ng build",
+    "deploy": "ng build --prod && firebase deploy",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
