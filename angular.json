@@ -64,7 +64,8 @@
               "cose-base",
               "firebase/app",
               "@firebase/app",
-              "@firebase/auth"
+              "@firebase/auth",
+              "@firebase/util"
             ]
           },
           "configurations": {
