@@ -36,6 +36,7 @@ export class SearchService {
         for (const res of results) {
           _results[res.name] = {
             name: res.name,
+            safeName: encodeURIComponent(res.name),
             version: res.version,
             description: res.description,
           };
