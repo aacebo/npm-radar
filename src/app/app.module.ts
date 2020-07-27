@@ -2,9 +2,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
 
 import cytoscape from 'cytoscape';
 import fcose from 'cytoscape-fcose';
+
+import { environment } from '../environments/environment';
 
 import { ProgressModule } from './ui/progress';
 
@@ -20,6 +24,8 @@ cytoscape.use(fcose);
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebase || { }),
+    AngularFireAnalyticsModule,
 
     AppRoutingModule,
     ProgressModule,

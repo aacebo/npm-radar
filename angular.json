@@ -61,7 +61,10 @@
               "cytoscape",
               "cytoscape-fcose",
               "heap",
-              "cose-base"
+              "cose-base",
+              "firebase/app",
+              "@firebase/app",
+              "@firebase/auth"
             ]
           },
           "configurations": {
@@ -182,8 +185,13 @@
               "devServerTarget": "dppkg:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
-    }},
+    }
+  },
   "defaultProject": "dppkg"
 }

@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "dppkg-451d0"
+  },
+  "targets": {
+    "dppkg-451d0": {
+      "hosting": {
+        "dppkg": [
+          "dppkg-451d0"
+        ]
+      }
+    }
   }
 }
