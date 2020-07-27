@@ -6,7 +6,7 @@ const express = require('express');
 const app = express();
 app.use(cors({ origin: true }));
 
-app.get('/:pkg', cors(), (req, res) => {
+app.get('/package/:pkg', cors(), (req, res) => {
   const url = `https://registry.npmjs.org/${req.params.pkg}`;
 
   request.get({ url, json: true }, (_err, _resp, body) => {
@@ -22,4 +22,4 @@ app.get('/suggestions', cors(), (req, res) => {
   });
 });
 
-exports.package = functions.https.onRequest(app);
+exports.packages = functions.https.onRequest(app);
