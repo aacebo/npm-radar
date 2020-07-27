@@ -1,3 +1,5 @@
+@import '../../../styles/break-points';
+
 @import './footer';
 
 .nrr-footer {
@@ -10,6 +12,18 @@
   > div {
     display: flex;
     margin: auto 5px;
+
+    &.end {
+      > div {
+        &:first-child {
+          display: none;
+
+          @media only screen and (min-width: $nrr-break-point-sm) {
+            display: block;
+          }
+        }
+      }
+    }
 
     > div {
       &:not(:last-child) {
