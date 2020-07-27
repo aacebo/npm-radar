@@ -49,7 +49,7 @@ export class PackageComponent implements OnInit {
       this.menus.search = false;
       this._graph?.clear();
 
-      this.packageService.findOne(encodeURIComponent(this._name), this._version);
+      this.packageService.findOne(this._name, this._version);
     });
   }
 

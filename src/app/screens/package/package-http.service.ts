@@ -11,6 +11,6 @@ export class PackageHttpService {
   constructor(private readonly _http: HttpClient) { }
 
   findOne(name: string) {
-    return this._http.get<INpmPackage>(`${ environment.api.pkg }/${ name }`);
+    return this._http.get<INpmPackage>(`${ environment.api.pkg }/${ environment.production ? encodeURIComponent(name) : name }`);
   }
 }

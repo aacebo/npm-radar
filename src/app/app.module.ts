@@ -17,6 +17,15 @@ import { AppRoutingModule } from './app-routing.module';
 
 cytoscape.use(fcose);
 
+let firebase = [
+  AngularFireModule.initializeApp(environment.firebase || { }),
+  AngularFireAnalyticsModule,
+];
+
+if (!environment.production) {
+  firebase = [];
+}
+
 @NgModule({
   declarations: [AppComponent],
   bootstrap: [AppComponent],
@@ -24,8 +33,7 @@ cytoscape.use(fcose);
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    AngularFireModule.initializeApp(environment.firebase || { }),
-    AngularFireAnalyticsModule,
+    ...firebase,
 
     AppRoutingModule,
     ProgressModule,
