@@ -5,7 +5,7 @@
     "postinstall": "ngcc",
     "ng": "ng",
     "start": "ng serve",
-    "start:firebase": "ng build --prod && firebase serve",
+    "start:firebase": "ng build --configuration=staging && firebase serve",
     "build": "ng build",
     "deploy": "ng build --prod && firebase deploy",
     "test": "ng test",
